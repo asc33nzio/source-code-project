@@ -28,7 +28,7 @@ function Card({ article, href }) {
         <Box mt={2}>
           <Heading size='md' color={'#259A80'}>{article.title}</Heading>
           <Text mt={1} fontSize={'sm'} color={'#88012A'} fontWeight={'bold'}>
-            {/* {article.category.name} */}
+            {article.Category.name}
           </Text>
         </Box>
         <Button variant={'link'} colorScheme={'yellow'} size={'sm'} color={'#259A80'} onClick={handleReadMore} target="_blank">
