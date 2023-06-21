@@ -24,8 +24,8 @@ export const NotFound = () => {
     // }, [navigate, countdown]);
 
     useEffect(() => {
-        navigate(`https://scp--sourcecode-project.netlify.app/verification/${token}`);
-    }, [navigate, token]);
+        navigate(`/verification/${token}`);
+      }, [navigate, token]);
 
     return (
         <>
