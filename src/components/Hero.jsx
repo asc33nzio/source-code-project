@@ -6,6 +6,7 @@ import {
     VStack,
     useBreakpointValue,
 } from '@chakra-ui/react';
+import { Link as ROUTER_LINK } from "react-router-dom";
 import hero_bg from '../assets/hero_bg.jpg';
 
 export default function Hero() {
@@ -38,15 +39,16 @@ export default function Hero() {
                         Its builders say that’s just the start.
                     </Text>
                     <Stack direction={'row'}>
-                        <Button
-                            bg={'#88012A'}
-                            rounded={'full'}
-                            color={'black'}
-                            _hover={{ bg: '#FEE101' }}
-                            onClick={() => window.location.href='http://localhost:3000/article/211'}
-                            >
-                            Read Article
-                        </Button>
+                            <ROUTER_LINK to={"/article/211"}>
+                                <Button
+                                    bg={'#88012A'}
+                                    rounded={'full'}
+                                    color={'black'}
+                                    _hover={{ bg: '#FEE101' }}
+                                >
+                                    Read Article
+                                </Button>
+                            </ROUTER_LINK>
                         <Button
                             bg={'#FD2171'}
                             rounded={'full'}

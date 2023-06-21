@@ -11,7 +11,6 @@ import {
     MenuItem,
     MenuDivider,
     useDisclosure,
-    Stack,
     chakra,
     Text,
 } from '@chakra-ui/react';
@@ -22,8 +21,6 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setLoggedIn, setLoggedOut } from '../redux/store';
 import axios from 'axios';
-
-const Links = ['Search Articles'];
 
 const ChakraText = chakra(Text);
 
@@ -73,9 +70,9 @@ export default function Navbar() {
                         },
                     }
                 );
-                console.log(response.data)
                 console.log("Exit the matrix. Return to the source.")
-
+                console.log("Welcome")
+                console.log(response.data.username);
                 // Check if the response indicates that the user is logged in
                 if (token) { //if (response.headers.authorization) {
                     dispatch(setLoggedIn());
@@ -133,36 +130,14 @@ export default function Navbar() {
                             as={'nav'}
                             spacing={5}
                             display={{ base: 'none', md: 'flex' }}>
+
                             <NavLink key='Home' fontWeight={'bold'} to="/">
                                 Home
                             </NavLink>
 
-                            <ScrollLink
-                                to="bikinibottom"
-                                smooth={true}
-                                duration={5000}
-                            >
-                                <ChakraText
-                                    px={2}
-                                    py={1}
-                                    rounded="md"
-                                    fontWeight="bold"
-                                    fontFamily="monospace"
-                                    _hover={{
-                                        cursor: 'pointer',
-                                        textDecoration: 'none',
-                                        bg: '#FEE101',
-                                    }}
-                                >
-                                    Top Articles
-                                </ChakraText>
-                            </ScrollLink>
-
-                            {Links.map((link) => (
-                                <NavLink key={link} fontWeight={'bold'}>
-                                    {link}
-                                </NavLink>
-                            ))}
+                            <NavLink key='Home' fontWeight={'bold'} to="/">
+                                Search Articles
+                            </NavLink>
 
                             <ScrollLink
                                 to="bikinibottom"
@@ -211,9 +186,11 @@ export default function Navbar() {
                                             Write Something
                                         </CustomMenuItem>
                                     </ROUTER_LINK>
-                                    <CustomMenuItem bg={'#B9AE0C'} fontWeight={'bold'}>
-                                        Liked Articles
-                                    </CustomMenuItem>
+                                    <ROUTER_LINK to={"/"}>
+                                        <CustomMenuItem bg={'#B9AE0C'} fontWeight={'bold'}>
+                                            God Mode
+                                        </CustomMenuItem>
+                                    </ROUTER_LINK>
                                     <MenuDivider />
                                     <CustomMenuItem bg={'#B9AE0C'} fontWeight={'bold'} onClick={handleLogout}>
                                         Logout
@@ -254,7 +231,8 @@ export default function Navbar() {
                     </Flex>
                 </Flex>
 
-                {isOpen ? (
+                {/* For responsive purposes. Do later when time is abundant. */} 
+                {/* {isOpen ? (
                     <Box pb={5} display={{ md: 'block' }}>
                         <Stack as={'nav'} spacing={5}>
                             {Links.map((link) => (
@@ -267,7 +245,7 @@ export default function Navbar() {
                             ) : null}
                         </Stack>
                     </Box>
-                ) : null}
+                ) : null} */}
             </Box>
         </>
     );

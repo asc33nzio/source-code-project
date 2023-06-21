@@ -62,22 +62,20 @@ export default function Carousel() {
             <Stack height='100%' width='100%' position='relative'>
               <img src={carouselImages[index]} alt={`caro_${index + 1}`} onClick={() => navigate(`/article/${article.id}`)} style={{ cursor: 'pointer' }} />
               <Stack position='absolute' zIndex={1} top={0} right={0} color='white'>
-                <Text fontFamily='Cascadia Mono' fontSize='22px' color='yellow' textAlign={'right'}>
+                <Text fontFamily='monospace' fontSize='22px' color='yellow' textAlign={'right'}>
                   {article.title}
                 </Text>
               </Stack>
               <Stack position={'absolute'} zIndex={1}>
-                <div style={{ color: 'white', fontFamily: 'monospace', textAlign: index % 2 === 0 ? 'right' : 'left' }}>
+                <div style={{ color: 'white', fontFamily: 'monospace', textAlign: 'left' }}>
                   <Text color='#259A80' fontWeight='bold' fontSize='20px' fontFamily='monospace' textAlign={'left'} mt={'80px'}>
                     {article.total_fav}
                   </Text>
                   People loved this article.
                 </div>
               </Stack>
-                  {/* console.log(response); */}
-                  {/* console.log(article[0]); */}
               <Stack direction={'column'} position={'static'} zIndex={1}>
-                <Text color='white' fontFamily='monospace' fontStyle='italic' textAlign={index % 2 === 0 ? 'right' : 'left'}>
+                <Text color='white' fontFamily='monospace' fontStyle='italic' textAlign={'center'}>
                   {article.Category.name}
                 </Text>
               </Stack>

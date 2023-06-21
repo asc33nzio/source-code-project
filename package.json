@@ -1,5 +1,4 @@
 {
-  "homepage": "https://asc33nzio.github.io/source-code-project/",
   "name": "source_code_project",
   "version": "0.1.0",
   "private": true,
@@ -33,8 +32,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "build-localhost": "PUBLIC_URL=/ react-scripts build",
     "test": "react-scripts test",

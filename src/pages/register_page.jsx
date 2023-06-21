@@ -14,12 +14,14 @@ import {
     AlertIcon,
     CloseButton,
 } from '@chakra-ui/react';
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 
 const validationSchema = Yup.object().shape({
     username: Yup.string().required('Username is required'),
-    email: Yup.string().email('Invalid email address').required('Email is required'),
-    phone: Yup.string().min(12, 'Phone number must be at least 12 digits').required('Phone number is required'),
+    email: Yup.string().email('Invalid e-mail address').required('E-mail is required'),
+    phone: Yup.number()
+        .typeError('You have a unique number. What universe are you from?')
+        .min(1000000000, 'Phone number must be 10-12 digits long').required('Phone number is required'),
     password: Yup.string()
         .min(6, 'Password must be at least 6 characters')
         .matches(/^(?=.*[A-Z])(?=.*\W).+$/, 'Password must contain an uppercase letter and a symbol')
@@ -77,37 +79,45 @@ export const RegisterPage = () => {
                         <Form>
                             <FormControl mb={4}>
                                 <FormLabel htmlFor="username" color='black' >Username</FormLabel>
-                                <Field as={Input} type="text" id="username" name="username" color='black' />
+                                <Field as={Input} type="text" id="username" name="username" color='black' placeholder={'Enter a cool username here.'} />
                                 <ErrorMessage name="username" component={Text} color="red" fontSize="xs" mt={1} />
                             </FormControl>
 
                             <FormControl mb={4}>
                                 <FormLabel htmlFor="email" color='black' >Email</FormLabel>
-                                <Field as={Input} type="email" id="email" name="email" color='black' />
+                                <Field as={Input} type="email" id="email" name="email" color='black' placeholder={'Enter a valid e-mail address. No fakes.'} />
                                 <ErrorMessage name="email" component={Text} color="red" fontSize="xs" mt={1} />
                             </FormControl>
 
                             <FormControl mb={4}>
                                 <FormLabel htmlFor="phone" color='black' >Phone Number</FormLabel>
-                                <Field as={Input} type="text" id="phone" name="phone" color='black' />
+                                <Field as={Input} type="text" id="phone" name="phone" color='black' placeholder={"10-12 digits or it's no good."} />
                                 <ErrorMessage name="phone" component={Text} color="red" fontSize="xs" mt={1} />
                             </FormControl>
 
                             <FormControl mb={4}>
                                 <FormLabel htmlFor="password" color='black' >Password</FormLabel>
-                                <Field as={Input} type="password" id="password" name="password" color='black' />
+                                <Field as={Input} type="password" id="password" name="password" color='black' placeholder={"One's password is a reflection of one's self."} />
                                 <ErrorMessage name="password" component={Text} color="red" fontSize="xs" mt={1} />
                             </FormControl>
 
                             <FormControl mb={4}>
                                 <FormLabel htmlFor="confirmPassword" color='black' >Confirm Password</FormLabel>
-                                <Field as={Input} type="password" id="confirmPassword" name="confirmPassword" color='black' />
+                                <Field as={Input} type="password" id="confirmPassword" name="confirmPassword" color='black' placeholder={"What's left to be said?"} />
                                 <ErrorMessage name="confirmPassword" component={Text} color="red" fontSize="xs" mt={1} />
                             </FormControl>
 
-                            <Button type="submit" colorScheme="yellow" isLoading={isSubmitting} mb={4}>
-                                Register
-                            </Button>
+                            <Flex justify="space-between">
+                                <Button type="submit" colorScheme="yellow" isLoading={isSubmitting} mb={2}>
+                                    Register
+                                </Button>
+
+                                <Link to={'/'}>
+                                    <Button colorScheme="yellow" mb={2}>
+                                        Return Home
+                                    </Button>
+                                </Link>
+                            </Flex>
 
                             <ErrorMessage name="submit">
                                 {errorMessage => (
@@ -121,6 +131,7 @@ export const RegisterPage = () => {
                         </Form>
                     )}
                 </Formik>
+
             </Box>
         </Flex>
     );

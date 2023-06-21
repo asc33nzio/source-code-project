@@ -63,7 +63,7 @@ export function Forget() {
                         justifyContent={'center'}
                         alignItems={'center'}
                         position={'relative'}
-                        fontFamily={'Cascadia Mono'}
+                        fontFamily={'monospace'}
                     >
                         <Heading position={"block"} fontFamily={'monospace'}>
                             FORGET ME NOT.

@@ -2,45 +2,58 @@ import * as React from "react";
 import { Button, Checkbox, Flex, Heading, Input, InputGroup, InputRightElement, Link, Text, extendTheme, ChakraProvider } from "@chakra-ui/react";
 import { useNavigate, Link as ROUTER_LINK } from "react-router-dom";
 import { Image } from "@chakra-ui/react";
-import Mail from "../assets/login_thumbs/mail.png";
 import User from "../assets/login_thumbs/user.png";
+import Mail from "../assets/login_thumbs/mail.png";
 import axios from "axios";
 import { useDispatch } from 'react-redux';
 import { setAuthToken, setLoggedIn } from '../redux/store';
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
-export function LoginPhone() {
-  const [show, setShow] = React.useState(false)
-  const [phone, setPhone] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  
-  const handleClick = () => setShow(!show)
-
-  const checkboxTheme = extendTheme({
-    components: {
-      Checkbox: {
-        baseStyle: {
-          control: {
-            _checked: {
-              bg: 'red',
-              borderColor: 'red',
-            },
+const checkboxTheme = extendTheme({
+  components: {
+    Checkbox: {
+      baseStyle: {
+        control: {
+          _checked: {
+            bg: 'red',
+            borderColor: 'red',
           },
         },
       },
     },
-  });
+  },
+});
 
-  const handleLogin = async () => {
+const validationSchema = Yup.object().shape({
+  phone: Yup.number()
+    .typeError('You have a unique number. What universe are you from?')
+    .min(1000000000, 'Phone number must be 10-12 digits long').required('Phone number is required'),
+  password: Yup.string()
+    .min(6, 'Password must be at least 6 characters')
+    .matches(/^(?=.*[A-Z])(?=.*\W).+$/, 'Password must contain an uppercase letter and a symbol')
+    .required('Password is required'),
+});
+
+export function LoginPhone() {
+  const [show, setShow] = React.useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    setShow(!show);
+    formik.setFieldValue('password', formik.values.password);
+  };
+
+  const handleLogin = async (values) => {
     try {
       const response = await axios.post(
         "https://minpro-blog.purwadhikabootcamp.com/api/auth/login",
         {
           username: "",
           email: "",
-          phone: phone,
-          password: password,
+          phone: values.phone,
+          password: values.password,
         }
       );
       console.log(response.data);
@@ -51,14 +64,24 @@ export function LoginPhone() {
 
       // Dispatch an action to set the logged-in status
       dispatch(setLoggedIn());
-      alert('Login successful. Click ok to return to the source')
+      alert('Login successful. Click ok to return to the source');
       navigate('/');
 
     } catch (error) {
-      console.error('Incorrect username or password');
+      console.error(error);
+      alert('Incorrect phone number or password');
       // Handle error or display error message to the user
     }
   };
+
+  const formik = useFormik({
+    initialValues: {
+      phone: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: handleLogin,
+  });
 
   return (
     <ChakraProvider theme={checkboxTheme}>
@@ -88,30 +111,37 @@ export function LoginPhone() {
           width={'30vw'}
           height={'30vh'}
           justifyContent={'center'}
-          alignItems={'center'}
           position={'relative'}
-          fontFamily={'Cascadia Mono'}
+          fontFamily={'monospace'}
         >
 
           <Heading position={"block"} fontFamily={'monospace'}>RETURN TO THE SOURCE.</Heading>
 
           <Input
+            id="phone"
+            name="phone"
             placeholder={"Enter your phone number"}
             position={"relative"}
             borderColor={'red'}
             borderBlock={'red'}
             focusBorderColor={'red'}
-            value={phone}
-            onChange={(input) => setPhone(input.target.value)}
+            value={formik.values.username}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             onKeyDown={(event) => {
               if (event.key === "Enter") {
-                handleLogin();
+                handleLogin(formik.values);
               }
             }}
-            />
+          />
+          {formik.errors.phone && formik.touched.phone && (
+            <Text color="red" fontSize="sm">{formik.errors.phone}</Text>
+          )}
 
           <InputGroup size='md'>
             <Input
+              id="password"
+              name="password"
               pr={'4.5rem'}
               type={show ? 'text' : 'password'}
               placeholder={'Enter your password'}
@@ -119,11 +149,12 @@ export function LoginPhone() {
               borderColor={'red'}
               borderBlock={'red'}
               focusBorderColor={'red'}
-              value={password}
-              onChange={(input) => setPassword(input.target.value)}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               onKeyDown={(event) => {
                 if (event.key === "Enter") {
-                  handleLogin();
+                  handleLogin(formik.values);
                 }
               }}
             />
@@ -140,20 +171,21 @@ export function LoginPhone() {
 
             </InputRightElement>
           </InputGroup>
+          {formik.errors.password && formik.touched.password && (
+            <Text color="red" fontSize="sm">{formik.errors.password}</Text>
+          )}
 
           <Flex direction={'row'} justifyContent={'space-between'} alignItems={'center'} bgColor={'none'} width={'30vw'} height={'3vh'} marginTop={'10px'}>
 
-            <Checkbox>Remember Me</Checkbox>
+            <Checkbox alignself={'flex-start'}><Text fontSize={'13px'}>Remember Me</Text></Checkbox>
 
             <Button
               mt={4}
               colorScheme="yellow"
               size="md"
-              onClick={handleLogin}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  handleLogin();
-                }
+              onClick={() => {
+                formik.setFieldValue('password', formik.values.password);
+                handleLogin(formik.values);
               }}
             >
               Login
@@ -173,7 +205,7 @@ export function LoginPhone() {
             </Text>
 
             <Text>
-              <Link href='/'>Sign Up</Link>
+              <Link href='/register'>Sign Up</Link>
             </Text>
           </Flex>
         </Flex>

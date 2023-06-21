@@ -7,47 +7,51 @@ import Phone from "../assets/login_thumbs/phone.png";
 import axios from "axios";
 import { useDispatch } from 'react-redux';
 import { setAuthToken, setLoggedIn } from '../redux/store';
+import { useFormik } from "formik";
 import * as Yup from 'yup';
 
-export function LoginEmail() {
-  const [show, setShow] = React.useState(false)
-  const [mail, setMail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleClick = () => setShow(!show)
-
-  const checkboxTheme = extendTheme({
-    components: {
-      Checkbox: {
-        baseStyle: {
-          control: {
-            _checked: {
-              bg: 'red',
-              borderColor: 'red',
-            },
+const checkboxTheme = extendTheme({
+  components: {
+    Checkbox: {
+      baseStyle: {
+        control: {
+          _checked: {
+            bg: 'red',
+            borderColor: 'red',
           },
         },
       },
     },
-  });
+  },
+});
 
-  const validationSchema = Yup.object().shape({
-    mail: Yup.string().email('Invalid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
-  });
+const validationSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid e-mail address').required('E-mail is required'),
+  password: Yup.string()
+    .min(6, 'Password must be at least 6 characters')
+    .matches(/^(?=.*[A-Z])(?=.*\W).+$/, 'Password must contain an uppercase letter and a symbol')
+    .required('Password is required'),
+});
 
-  const handleLogin = async () => {
+export function LoginEmail() {
+  const [show, setShow] = React.useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    setShow(!show);
+    formik.setFieldValue('email', formik.values.email);
+  };
+
+  const handleLogin = async (values) => {
     try {
-      await validationSchema.validate({ mail, password }, { abortEarly: false });
       const response = await axios.post(
         "https://minpro-blog.purwadhikabootcamp.com/api/auth/login",
         {
           username: "",
-          email: mail,
+          email: values.email,
           phone: "",
-          password: password,
+          password: values.password,
         }
       );
       console.log(response.data);
@@ -60,18 +64,24 @@ export function LoginEmail() {
       dispatch(setLoggedIn());
       alert('Login successful. Click ok to return to the source')
       navigate('/');
+
     } catch (error) {
-      if (error instanceof Yup.ValidationError) {
-      const validationErrors = {};
-      // console.error(error);
-      error.inner.forEach((validationError) => {
-        validationErrors[validationError.path] = validationError.message;
-      });
+      console.error(error);
+      alert('Incorrect e-mail or password')
+      // Handle error or display error message to the user
       // alert('Incorrect username or password')
 
     }
   };
-};
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: handleLogin,
+  });
 
   return (
     <ChakraProvider theme={checkboxTheme}>
@@ -103,92 +113,104 @@ export function LoginEmail() {
           justifyContent={'center'}
           alignItems={'center'}
           position={'relative'}
-          fontFamily={'Cascadia Mono'}
+          fontFamily={'monospace'}
         >
 
           <Heading position={"block"} fontFamily={'monospace'}>RETURN TO THE SOURCE.</Heading>
 
-          <Input
-            placeholder={"Enter your e-mail address"}
-            position={"relative"}
-            borderColor={'red'}
-            borderBlock={'red'}
-            focusBorderColor={'red'}
-            value={mail}
-            onChange={(input) => setMail(input.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === "Enter") {
-                handleLogin();
-              }
-            }}
-          />
-
-          <InputGroup size='md'>
+          <form onSubmit={formik.handleSubmit}>
             <Input
-              pr={'4.5rem'}
-              type={show ? 'text' : 'password'}
-              placeholder={'Enter your password'}
+              id="email"
+              name="email"
+              placeholder={"Enter your e-mail address"}
               position={"relative"}
               borderColor={'red'}
               borderBlock={'red'}
               focusBorderColor={'red'}
-              value={password}
-              onChange={(input) => setPassword(input.target.value)}
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               onKeyDown={(event) => {
                 if (event.key === "Enter") {
-                  handleLogin();
+                  handleLogin(formik.values);
                 }
               }}
             />
+            {formik.errors.email && formik.touched.email && (
+              <Text color="red" fontSize="sm">{formik.errors.email}</Text>
+            )}
 
-            <InputRightElement width={'4.5rem'}>
+            <InputGroup size='md'>
+              <Input
+                id="password"
+                name="password"
+                pr={'4.5rem'}
+                type={show ? 'text' : 'password'}
+                placeholder={'Enter your password'}
+                position={"relative"}
+                borderColor={'red'}
+                borderBlock={'red'}
+                focusBorderColor={'red'}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    handleLogin(formik.values);
+                  }
+                }}
+              />
 
-              <Button h={'1.75rem'}
-                size={'sm'}
-                onClick={handleClick}
-                _hover={{ bg: '#E00047' }}
-                color={show ? '#52001E' : '#52001E'}>
-                {show ? 'Hide!' : 'Show!'}
+              <InputRightElement width={'4.5rem'}>
+
+                <Button h={'1.75rem'}
+                  size={'sm'}
+                  onClick={handleClick}
+                  _hover={{ bg: '#E00047' }}
+                  color={show ? '#52001E' : '#52001E'}>
+                  {show ? 'Hide!' : 'Show!'}
+                </Button>
+
+              </InputRightElement>
+            </InputGroup>
+            {formik.errors.password && formik.touched.password && (
+              <Text color="red" fontSize="sm">{formik.errors.password}</Text>
+            )}
+
+            <Flex direction={'row'} justifyContent={'space-between'} alignItems={'center'} bgColor={'none'} width={'30vw'} height={'3vh'} marginTop={'10px'}>
+
+              <Checkbox alignself={'flex-start'}><Text fontSize={'13px'}>Remember Me</Text></Checkbox>
+
+              <Button
+                mt={4}
+                colorScheme="yellow"
+                size="md"
+                onClick={() => {
+                  formik.setFieldValue('password', formik.values.password);
+                  handleLogin(formik.values);
+                }}
+              >
+                Login
               </Button>
 
-            </InputRightElement>
-          </InputGroup>
+              <Text>
+                <Link href="/forget_password">Forget Password</Link>
+              </Text>
 
-          <Flex direction={'row'} justifyContent={'space-between'} alignItems={'center'} bgColor={'none'} width={'30vw'} height={'3vh'} marginTop={'10px'}>
+            </Flex>
 
-            <Checkbox>Remember Me</Checkbox>
+            <Flex direction={'row'} justifyContent={'space-between'} alignItems={'center'} bgColor={'none'} width={'30vw'} height={'3vh'}>
+              <Text >
+                <ROUTER_LINK to="/">
+                  Return Home
+                </ROUTER_LINK>
+              </Text>
 
-            <Button
-              mt={4}
-              colorScheme="yellow"
-              size="md"
-              onClick={handleLogin}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  handleLogin();
-                }
-              }}
-            >
-              Login
-            </Button>
-
-            <Text>
-              <Link href="/forget_password">Forget Password</Link>
-            </Text>
-
-          </Flex>
-
-          <Flex direction={'row'} justifyContent={'space-between'} alignItems={'center'} bgColor={'none'} width={'30vw'} height={'3vh'}>
-            <Text >
-              <ROUTER_LINK to="/">
-                Return Home
-              </ROUTER_LINK>
-            </Text>
-
-            <Text>
-              <Link href='/register'>Sign Up</Link>
-            </Text>
-          </Flex>
+              <Text>
+                <Link href='/register'>Sign Up</Link>
+              </Text>
+            </Flex>
+          </form>
         </Flex>
 
         <Flex direction="row" alignItems="center" mt={-3} ml={0}>

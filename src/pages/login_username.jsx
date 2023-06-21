@@ -7,40 +7,51 @@ import Phone from "../assets/login_thumbs/phone.png";
 import axios from "axios";
 import { useDispatch } from 'react-redux';
 import { setAuthToken, setLoggedIn } from '../redux/store';
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
-export function LoginUser() {
-  const [show, setShow] = React.useState(false)
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleClick = () => setShow(!show)
-
-  const checkboxTheme = extendTheme({
-    components: {
-      Checkbox: {
-        baseStyle: {
-          control: {
-            _checked: {
-              bg: 'red',
-              borderColor: 'red',
-            },
+const checkboxTheme = extendTheme({
+  components: {
+    Checkbox: {
+      baseStyle: {
+        control: {
+          _checked: {
+            bg: 'red',
+            borderColor: 'red',
           },
         },
       },
     },
-  });
+  },
+});
 
-  const handleLogin = async () => {
+const validationSchema = Yup.object().shape({
+  username: Yup.string().required('Username is required'),
+  password: Yup.string()
+    .min(6, 'Password must be at least 6 characters')
+    .matches(/^(?=.*[A-Z])(?=.*\W).+$/, 'Password must contain an uppercase letter and a symbol')
+    .required('Password is required'),
+});
+
+export function LoginUser() {
+  const [show, setShow] = React.useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    setShow(!show);
+    formik.setFieldValue('password', formik.values.password);
+  };
+
+  const handleLogin = async (values) => {
     try {
       const response = await axios.post(
         "https://minpro-blog.purwadhikabootcamp.com/api/auth/login",
         {
-          username: username,
+          username: values.username,
           email: "",
           phone: "",
-          password: password,
+          password: values.password,
         }
       );
       console.log(response.data);
@@ -51,7 +62,7 @@ export function LoginUser() {
 
       // Dispatch an action to set the logged-in status
       dispatch(setLoggedIn());
-      alert('Login successful. Click ok to return to the source')
+      alert('Login successful. Click ok to return to the source');
       navigate('/');
 
     } catch (error) {
@@ -60,6 +71,15 @@ export function LoginUser() {
       // Handle error or display error message to the user
     }
   };
+
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: handleLogin,
+  });
 
   return (
     <ChakraProvider theme={checkboxTheme}>
@@ -91,92 +111,104 @@ export function LoginUser() {
           justifyContent={'center'}
           alignItems={'center'}
           position={'relative'}
-          fontFamily={'Cascadia Mono'}
+          fontFamily={'monospace'}
         >
 
           <Heading position={"block"} fontFamily={'monospace'}>RETURN TO THE SOURCE.</Heading>
 
-          <Input
-            placeholder={"Enter your username"}
-            position={"relative"}
-            borderColor={'red'}
-            borderBlock={'red'}
-            focusBorderColor={'red'}
-            value={username}
-            onChange={(input) => setUsername(input.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === "Enter") {
-                handleLogin();
-              }
-            }}
-          />
-
-          <InputGroup size='md'>
+          <form onSubmit={formik.handleSubmit}>
             <Input
-              pr={'4.5rem'}
-              type={show ? 'text' : 'password'}
-              placeholder={'Enter your password'}
+              id="username"
+              name="username"
+              placeholder={"Enter your username"}
               position={"relative"}
               borderColor={'red'}
               borderBlock={'red'}
               focusBorderColor={'red'}
-              value={password}
-              onChange={(input) => setPassword(input.target.value)}
+              value={formik.values.username}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               onKeyDown={(event) => {
                 if (event.key === "Enter") {
-                  handleLogin();
+                  handleLogin(formik.values);
                 }
               }}
             />
+            {formik.errors.username && formik.touched.username && (
+              <Text color="red" fontSize="sm">{formik.errors.username}</Text>
+            )}
 
-            <InputRightElement width={'4.5rem'}>
+            <InputGroup size='md'>
+              <Input
+                id="password"
+                name="password"
+                pr={'4.5rem'}
+                type={show ? 'text' : 'password'}
+                placeholder={'Enter your password'}
+                position={"relative"}
+                borderColor={'red'}
+                borderBlock={'red'}
+                focusBorderColor={'red'}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    handleLogin(formik.values);
+                  }
+                }}
+              />
 
-              <Button h={'1.75rem'}
-                size={'sm'}
-                onClick={handleClick}
-                _hover={{ bg: '#E00047' }}
-                color={show ? '#52001E' : '#52001E'}>
-                {show ? 'Hide!' : 'Show!'}
+              <InputRightElement width={'4.5rem'}>
+
+                <Button h={'1.75rem'}
+                  size={'sm'}
+                  onClick={handleClick}
+                  _hover={{ bg: '#E00047' }}
+                  color={show ? '#52001E' : '#52001E'}>
+                  {show ? 'Hide!' : 'Show!'}
+                </Button>
+
+              </InputRightElement>
+            </InputGroup>
+            {formik.errors.password && formik.touched.password && (
+              <Text color="red" fontSize="sm">{formik.errors.password}</Text>
+            )}
+
+            <Flex direction={'row'} justifyContent={'space-between'} alignItems={'center'} bgColor={'none'} width={'30vw'} height={'3vh'} marginTop={'10px'}>
+
+              <Checkbox alignself={'flex-start'}><Text fontSize={'13px'}>Remember Me</Text></Checkbox>
+
+              <Button
+                mt={4}
+                colorScheme="yellow"
+                size="md"
+                onClick={() => {
+                  formik.setFieldValue('password', formik.values.password);
+                  handleLogin(formik.values);
+                }}
+              >
+                Login
               </Button>
 
-            </InputRightElement>
-          </InputGroup>
+              <Text>
+                <Link href="/forget_password">Forget Password</Link>
+              </Text>
 
-          <Flex direction={'row'} justifyContent={'space-between'} alignItems={'center'} bgColor={'none'} width={'30vw'} height={'3vh'} marginTop={'10px'}>
+            </Flex>
 
-            <Checkbox alignself={'flex-start'}>Remember Me</Checkbox>
+            <Flex direction={'row'} justifyContent={'space-between'} alignItems={'center'} bgColor={'none'} width={'30vw'} height={'3vh'}>
+              <Text >
+                <ROUTER_LINK to="/" alignself={'flex-start'}>
+                  Return Home
+                </ROUTER_LINK>
+              </Text>
 
-            <Button
-              mt={4}
-              colorScheme="yellow"
-              size="md"
-              onClick={handleLogin}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  handleLogin();
-                }
-              }}
-            >
-              Login
-            </Button>
-
-            <Text>
-              <Link href="/forget_password">Forget Password</Link>
-            </Text>
-
-          </Flex>
-
-          <Flex direction={'row'} justifyContent={'space-between'} alignItems={'center'} bgColor={'none'} width={'30vw'} height={'3vh'}>
-            <Text >
-              <ROUTER_LINK to="/" alignself={'flex-start'}>
-                Return Home
-              </ROUTER_LINK>
-            </Text>
-
-            <Text>
-              <Link href='/register'>Sign Up</Link>
-            </Text>
-          </Flex>
+              <Text>
+                <Link href='/register'>Sign Up</Link>
+              </Text>
+            </Flex>
+          </form>
         </Flex>
 
         <Flex direction="row" alignItems="center" mt={-3} ml={4}>

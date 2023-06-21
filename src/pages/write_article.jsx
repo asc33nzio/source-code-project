@@ -79,9 +79,11 @@ export const WriteArticle = () => {
                     },
                 }
             );
+            
+            console.log("Nice.")
+            console.log(response.data.data.title);
+            console.log(response.data.message);
 
-            // Handle the response as needed, e.g., show success message or navigate to a different page
-            console.log(response);
             alert('Article posted. This better be good.');
 
             // Reset form values

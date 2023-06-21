@@ -92,7 +92,7 @@ export const ResetPassword = () => {
             justifyContent={'center'}
             alignItems={'center'}
             position={'relative'}
-            fontFamily={'Cascadia Mono'}
+            fontFamily={'monospace'}
           >
             <Heading position={'block'} fontFamily={'monospace'} alignContent={'center'} textAlign={'center'} >
               Start Fresh With<br />A New Password

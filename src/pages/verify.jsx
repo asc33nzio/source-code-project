@@ -43,7 +43,7 @@ export const VerifyAccount = () => {
   }, [navigate, token]);
 
   return (
-    <Flex justify="center" align="center" height="100vh" bg="black" fontFamily={'Cascadia Mono'} >
+    <Flex justify="center" align="center" height="100vh" bg="black" fontFamily={'monospace'} >
       <Box bg="#A09006" p={8} borderRadius="md" maxWidth={400} width="100%">
         <Text color="black" fontSize="30px" fontWeight="bold" mb={4} textAlign={'center'}>
           Verifying your account....
