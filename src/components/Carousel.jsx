@@ -29,7 +29,8 @@ export default function Carousel() {
         const response = await fetch('https://minpro-blog.purwadhikabootcamp.com/api/blog/pagFav');
         if (response.ok) {
           const data = await response.json();
-          console.log(response)
+          // console.log(response);
+          // console.log(data);
           setArticles(data.result)
         } else {
           console.error('failed to fetch articles.', response.status, response.statusText);
@@ -77,7 +78,7 @@ export default function Carousel() {
                   {/* console.log(article[0]); */}
               <Stack direction={'column'} position={'static'} zIndex={1}>
                 <Text color='white' fontFamily='monospace' fontStyle='italic' textAlign={index % 2 === 0 ? 'right' : 'left'}>
-                  {article.title} response endpoint Category.id belom ktemu
+                  {article.Category.name}
                 </Text>
               </Stack>
             </Stack>
