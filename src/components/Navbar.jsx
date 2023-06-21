@@ -139,6 +139,10 @@ export default function Navbar() {
                                 Search Articles
                             </NavLink>
 
+                            <NavLink key='Verification' fontWeight={'bold'} to="/verification">
+                                Verify
+                            </NavLink>
+
                             <ScrollLink
                                 to="bikinibottom"
                                 smooth={true}

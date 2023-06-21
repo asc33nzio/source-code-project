@@ -21,7 +21,7 @@ import store from './redux/store';
 const BrowserRouter = createBrowserRouter([
   { path: "/", element: <App /> },
   { path: "/register", element: <RegisterPage /> },
-  { path: "/verification/:token", element: <VerifyAccount /> },
+  { path: "/verification", element: <VerifyAccount /> },
   { path: "/profile", element: <Profile /> },
   { path: "/login_user", element: <LoginUser /> },
   { path: "/login_email", element: <LoginEmail /> },

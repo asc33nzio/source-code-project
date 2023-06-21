@@ -53,12 +53,12 @@ export const RegisterPage = () => {
                     },
                 }
             );
-            console.log(response.data); // Handle successful registration response here
-            // Redirect the user to the verification page
+            console.log(response.data); 
+            
             setTimeout(() => {
                 alert("Before you can use your account, your need to verify. Please check your e-mail and spam folder.")
             }, 500);
-            // navigate(`/verify/${response.data.token}`);
+
             navigate("/")
 
             // Reset form values after successful registration
