@@ -1,8 +1,8 @@
 {
+  "homepage": "https://asc33nzio.github.io/source-code-project/",
   "name": "source_code_project",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://asc33nzio.github.io/source-code-project/",
   "dependencies": {
     "@babel/preset-react": "^7.22.5",
     "@chakra-ui/icons": "^2.0.19",
