@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/source-code-project/static/css/main.e3f28e8c.css",
+    "main.js": "/source-code-project/static/js/main.444b31cc.js",
+    "static/media/caro_2.jpg": "/source-code-project/static/media/caro_2.74828213a86c5d3cfce2.jpg",
+    "static/media/caro_6.jpg": "/source-code-project/static/media/caro_6.838bada85d3300b83a37.jpg",
+    "static/media/caro_8.jpg": "/source-code-project/static/media/caro_8.4d84a15ab4e9749f62ae.jpg",
+    "static/media/caro_5.jpg": "/source-code-project/static/media/caro_5.9808788cb95d29cd8d04.jpg",
+    "static/media/caro_4.gif": "/source-code-project/static/media/caro_4.77cad3d623a89be05cc1.gif",
+    "static/media/ig.png": "/source-code-project/static/media/ig.80e598d8df0c0a94d580.png",
+    "static/media/caro_1.jpg": "/source-code-project/static/media/caro_1.3fdc809be5e17c384ff2.jpg",
+    "static/media/caro_7.jpg": "/source-code-project/static/media/caro_7.3a2c552131829589fbc6.jpg",
+    "static/media/caro_3.jpg": "/source-code-project/static/media/caro_3.6dabdcb660e1a8ab7a84.jpg",
+    "static/media/hero_bg.jpg": "/source-code-project/static/media/hero_bg.b7b30e39ff2879af8f40.jpg",
+    "static/media/gmail.png": "/source-code-project/static/media/gmail.08faf50832c29185ae0e.png",
+    "static/media/user.png": "/source-code-project/static/media/user.a052765be0dbded11a05.png",
+    "static/media/wa.png": "/source-code-project/static/media/wa.faed58bdb4c0d5a76c2c.png",
+    "static/media/phone.png": "/source-code-project/static/media/phone.d443fb30580448a50fce.png",
+    "static/media/ghub.png": "/source-code-project/static/media/ghub.dfdd0989ffe0184bdd68.png",
+    "static/media/in.png": "/source-code-project/static/media/in.712c4ce3d6be06644d11.png",
+    "index.html": "/source-code-project/index.html",
+    "main.e3f28e8c.css.map": "/source-code-project/static/css/main.e3f28e8c.css.map",
+    "main.444b31cc.js.map": "/source-code-project/static/js/main.444b31cc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e3f28e8c.css",
+    "static/js/main.444b31cc.js"
+  ]
+}
