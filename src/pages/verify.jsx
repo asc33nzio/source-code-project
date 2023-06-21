@@ -38,10 +38,9 @@ export const VerifyAccount = () => {
 
       console.log(response);
     } catch (err) {
-      console.log(err);
       <Alert status="error" mt={4}>
         <AlertIcon />
-        Failed to verify account. Please check your e-mail or try again later.
+          Failed to verify account. Please check your e-mail or try again later.
         <CloseButton position="absolute" right="8px" top="8px" onClick={() => { }} />
       </Alert>
     }

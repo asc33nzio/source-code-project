@@ -16,12 +16,14 @@ import { Articles } from './pages/article';
 import { DynamicArticle } from './pages/dynamic_article';
 import { WriteArticle } from "./pages/write_article";
 import { Provider } from 'react-redux';
+import { NotFound } from './pages/404';
 import store from './redux/store';
 
 const BrowserRouter = createBrowserRouter([
   { path: "/", element: <App /> },
   { path: "/register", element: <RegisterPage /> },
-  { path: "/verification", element: <VerifyAccount /> },
+  { path: "/verification/", element: <VerifyAccount /> },
+  { path: "/verification/:token", element: <VerifyAccount /> },
   { path: "/profile", element: <Profile /> },
   { path: "/login_user", element: <LoginUser /> },
   { path: "/login_email", element: <LoginEmail /> },
@@ -31,6 +33,7 @@ const BrowserRouter = createBrowserRouter([
   { path: "/article", element: <Articles /> },
   { path: "/article/:id", element: <DynamicArticle /> },
   { path: "/write", element: <WriteArticle /> },
+  { path: '*', element: <NotFound /> },
 ]);
 
 const colorModeConfig = {
