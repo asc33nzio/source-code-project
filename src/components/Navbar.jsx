@@ -135,7 +135,7 @@ export default function Navbar() {
                                 Home
                             </NavLink>
 
-                            <NavLink key='Home' fontWeight={'bold'} to="/">
+                            <NavLink key='Search_Articles' fontWeight={'bold'} to="/">
                                 Search Articles
                             </NavLink>
 

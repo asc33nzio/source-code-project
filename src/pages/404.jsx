@@ -56,3 +56,49 @@ export const NotFound = () => {
         </>
     );
 };
+
+// // index.jsx
+// import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// import { App } from './App';
+// import { VerificationLandingPage } from './pages/verification_landing_page';
+
+// ReactDOM.render(
+//   <BrowserRouter>
+//     <Routes>
+//       <Route path="/" element={<App />} />
+//       <Route path="/verification/*" element={<VerificationLandingPage />} />
+//     </Routes>
+//   </BrowserRouter>,
+//   document.getElementById('root')
+// );
+
+// // verification_landing_page.jsx
+// import { useEffect } from 'react';
+// import { useNavigate, useLocation } from 'react-router-dom';
+
+// export const VerificationLandingPage = () => {
+//   const navigate = useNavigate();
+//   const location = useLocation();
+
+//   useEffect(() => {
+//     const token = location.pathname.replace('/verification/', ''); // Extract the token from the URL path
+
+//     // Send a request to the backend API to verify the account using the token
+//     // Example code:
+//     // axios.patch('https://minpro-blog.purwadhikabootcamp.com/api/auth/verify', {}, { headers: { Authorization: `Bearer ${token}` } })
+//     //   .then(response => {
+//     //     // Handle successful verification
+//     //     alert('Verification successful! You may now login.');
+//     //     navigate('/login_user');
+//     //   })
+//     //   .catch(error => {
+//     //     // Handle verification error
+//     //     alert('Failed to verify account. Please check your e-mail or try again later.');
+//     //   });
+
+//     // For testing purposes, navigate to the login page directly
+//     navigate('/login_user');
+//   }, [location.pathname, navigate]);
+
+//   return null; // Render nothing on the landing page
+// };
