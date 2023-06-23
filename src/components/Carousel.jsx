@@ -26,7 +26,7 @@ export default function Carousel() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://minpro-blog.purwadhikabootcamp.com/api/blog/pagFav');
+        const response = await fetch('https://minpro-blog.purwadhikabootcamp.com/api/blog/pagFav?page=1&orderBy=total_fav&sort=DESC');
         if (response.ok) {
           const data = await response.json();
           // console.log(response);

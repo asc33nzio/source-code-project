@@ -48,7 +48,7 @@ export default function Top_Articles() {
         const response = await fetch('https://minpro-blog.purwadhikabootcamp.com/api/blog/');
         if (response.ok) {
           const data = await response.json();
-          console.log(data.result)
+          // console.log(data.result)
           setArticles(data.result);
         } else {
           console.error('Failed to fetch articles.', response.status, response.statusText);

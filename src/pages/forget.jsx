@@ -30,6 +30,8 @@ export function Forget() {
             const response = await axios.put(
                 "https://minpro-blog.purwadhikabootcamp.com/api/auth/forgotPass",
                 {
+                    // FE_URL: "http://localhost:3000", //FOR DEVELOPMENT BUILD NOT PRODUCTION
+                    FE_URL: "https://scp--sourcecode-project.netlify.app",
                     email: email,
                 }
             );
@@ -39,7 +41,6 @@ export function Forget() {
         } catch (error) {
             console.error(error);
             alert('Email does not exist');
-            // Handle error or display error message to the user
         }
     };
 

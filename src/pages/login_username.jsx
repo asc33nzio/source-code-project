@@ -26,7 +26,7 @@ const checkboxTheme = extendTheme({
 });
 
 const validationSchema = Yup.object().shape({
-  username: Yup.string().required('Username is required'),
+  username: Yup.string().required('Username is required').min(3, 'Username must be at least 3 characters'),
   password: Yup.string()
     .min(6, 'Password must be at least 6 characters')
     .matches(/^(?=.*[A-Z])(?=.*\W).+$/, 'Password must contain an uppercase letter and a symbol')
@@ -35,13 +35,9 @@ const validationSchema = Yup.object().shape({
 
 export function LoginUser() {
   const [show, setShow] = React.useState(false);
+  const [loginCount, setLoginCount] = React.useState(0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const handleClick = () => {
-    setShow(!show);
-    formik.setFieldValue('password', formik.values.password);
-  };
 
   const handleLogin = async (values) => {
     try {
@@ -67,19 +63,32 @@ export function LoginUser() {
 
     } catch (error) {
       console.error(error);
-      alert('Incorrect username or password')
-      // Handle error or display error message to the user
-    }
+      alert('Incorrect username or password');
+      console.log(loginCount)
+    
+      if (loginCount >= 2) {
+        alert(`${loginCount} failed login attempts detected. Please make sure your account is verified.`);
+      } else {
+        setLoginCount(loginCount + 1);
+        formik.setFieldError('password', 'Incorrect username or password');
+      }
+    };
   };
 
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
+      failedLoginAttempts: 0,
     },
     validationSchema: validationSchema,
     onSubmit: handleLogin,
   });
+
+  const handleClick = () => {
+    setShow(!show);
+    formik.setFieldValue('password', formik.values.password);
+  };
 
   return (
     <ChakraProvider theme={checkboxTheme}>

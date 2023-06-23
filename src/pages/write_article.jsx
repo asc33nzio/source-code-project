@@ -31,7 +31,7 @@ export const WriteArticle = () => {
             })
             .catch((error) => {
                 console.log(error);
-                alert('asd');
+                alert('Category list unavailable. API endpoint not responding');
             });
     }, []);
 
@@ -55,7 +55,7 @@ export const WriteArticle = () => {
         file: Yup.mixed()
             .required('File is required')
             .test('fileSize', 'File size should be less than 1MB', (value) => {
-                return value && value.size <= 1024 * 1024; // 1MB
+                return value && value.size <= 1 * 1024 * 1024; 
             }),
     });
 
@@ -124,6 +124,7 @@ export const WriteArticle = () => {
                             height="15rem"
                             maxHeight={'15rem'}
                             color={'#259A80'}
+                            placeholder="Write something cool. Maximum 300 characters long or its no good. Running servers ain't cheap."
                         />
                         <FormErrorMessage>{formik.errors.content}</FormErrorMessage>
                     </FormControl>
@@ -136,6 +137,7 @@ export const WriteArticle = () => {
                             onBlur={formik.handleBlur}
                             value={formik.values.title}
                             color={'#259A80'}
+                            placeholder='Hmm.. what should we call this article?'
                         />
                         <FormErrorMessage>{formik.errors.title}</FormErrorMessage>
                     </FormControl>
@@ -149,6 +151,7 @@ export const WriteArticle = () => {
                             onBlur={formik.handleBlur}
                             value={formik.values.country}
                             color={'#259A80'}
+                            placeholder='Tell us where this event is happening.'
                         />
                         <FormErrorMessage>{formik.errors.country}</FormErrorMessage>
                     </FormControl>
@@ -166,7 +169,7 @@ export const WriteArticle = () => {
                             onChange={(value) => formik.setFieldValue('CategoryId', value)}
                             value={formik.values.CategoryId}
                         >
-                            <Stack direction="row" color='#259A80' justifyContent={'center'} pt={5}>
+                            <Stack direction="row" color='#259A80' justifyContent={'center'} pt={5} overflow={false}>
                                 {categories.map((category) => (
                                     <Radio key={category.id} value={category.id.toString()} colorScheme="yellow">
                                         {category.name}
@@ -189,6 +192,7 @@ export const WriteArticle = () => {
                             onBlur={formik.handleBlur}
                             value={formik.values.keywords}
                             color={'#259A80'}
+                            placeholder='Let everyone know what this thing is all about.'
                         />
                         <FormErrorMessage>{formik.errors.keywords}</FormErrorMessage>
                     </FormControl>
@@ -210,11 +214,11 @@ export const WriteArticle = () => {
 
                     
                     <Stack direction={'row'} mt={200} justifyContent={'space-between'}>
-                        <Button type="submit" disabled={formik.isSubmitting} mt="4" colorScheme={'yellow'}>
-                            Submit
-                        </Button>
                         <Button onClick={() => navigate('/')} mt="4" colorScheme={'yellow'}>
                             Return Home
+                        </Button>
+                        <Button type="submit" disabled={formik.isSubmitting} mt="4" colorScheme={'yellow'}>
+                            Submit
                         </Button>
                     </Stack>
                 </form>

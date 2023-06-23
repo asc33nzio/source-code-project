@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Box, Flex, Alert, AlertIcon, CloseButton, Spinner, Stack, Button, Input } from '@chakra-ui/react';
 
@@ -49,14 +49,14 @@ export const VerifyAccount = () => {
   };
 
   return (
-    <Flex justify="center" align="center" height="110vh" bg="black" fontFamily={'monospace'}>
+    <Flex justify="center" align="center" height="130vh" bg="black" fontFamily={'monospace'}>
       <Box bg="#A09006" p={8} borderRadius="md" maxWidth={400} width="100%">
-        <Box as='p' textAlign='center' color="#39FF14" fontSize="30px" fontWeight="bold" mb={4} >
+        <Box as='p' textAlign='center' color="yellow.700" fontSize="30px" fontWeight="bold" mb={4} >
           Don't Trust, Verify.
         </Box>
 
         <Box as='p' textAlign='center' color="black" fontSize="15px" fontWeight="bold" mb={4} >
-          Please open your e-mail and copy-paste your authentication token.
+          Normally, the link you click in your e-mail should verify your account. In the case that it doesn't, please follow the steps below. Open your e-mail and copy-paste your authentication token.
         </Box>
 
         <Box as='p' textAlign='center' color={'white'}>
@@ -67,7 +67,7 @@ export const VerifyAccount = () => {
           The sender should be
         </Box>
 
-        <Box as='p' textAlign='center' color={'teal'} fontWeight={'bold'} fontSize={'17px'}>
+        <Box as='p' textAlign='center' color={'blue.200'} fontWeight={'bold'} fontSize={'17px'}>
           fachriza.theblues@gmail.com
         </Box>
 
@@ -79,8 +79,8 @@ export const VerifyAccount = () => {
           You should copy everything after
         </Box>
 
-        <Box as='p' textAlign='center' color={'gold'} fontWeight={'bold'} fontSize={'17px'}>
-          http://localhost:3000/verification/
+        <Box as='p' textAlign='center' color={'yellow.700'} fontWeight={'bold'} fontSize={'17px'}>
+          https://scp--sourcecode-project.netlify.app/
         </Box>
 
         <Box as='p' textAlign='center' color={'white'} mt={3} mb={3}>
@@ -88,7 +88,7 @@ export const VerifyAccount = () => {
         </Box>
 
         <Stack justify={'center'} align={'center'}>
-          <Spinner size="lg" color="#39FF14" thickness="2px" />
+          <Spinner size="lg" color="green.300" thickness="2px" />
         </Stack>
 
         <Box as='p' textAlign='center' color="black" fontSize="sm" mt={2} >
@@ -99,13 +99,13 @@ export const VerifyAccount = () => {
           Redirecting you to the login page in{' '}
         </Box>
 
-        <Box as='p' textAlign='center' color={'#39FF14'} fontSize={'25px'}>
+        <Box as='p' textAlign='center' color={'green.300'} fontSize={'25px'}>
           {countdown}
         </Box>
-        
+
         <Box textAlign={'center'}>
-        {' '}
-        second(s)...
+          {' '}
+          second(s)...after you send the auth key
         </Box>
 
         <Stack>
@@ -118,7 +118,7 @@ export const VerifyAccount = () => {
           )}
           <Stack>
             <Input
-              placeholder={'Your auth key here..'}
+              placeholder={'Example key: eyJhbGciOiJIUzI...XK8'}
               mt={3}
               value={token}
               onChange={handleInputChange}
@@ -127,11 +127,26 @@ export const VerifyAccount = () => {
                   handleVerify();
                 }
               }}
+              color={'blue.200'}
+              _placeholder={{
+                color: 'yellow.700',
+              }}
             />
           </Stack>
-          <Button type="button" onClick={handleVerify} alignSelf={'center'} mt={5} textColor={'#39FF14'}>
-            Verify Account
-          </Button>
+
+          <Stack direction={'column'} alignContent={'center'} justifyContent={'center'} alignItems={'center'} justifyItems={'center'}>
+            <Button type="button" onClick={handleVerify} mt={5} textColor={'green.300'} fontWeight={'bold'} fontSize={'19px'} >
+              Verify Account
+            </Button>
+
+            <Link to={'/'}>
+              <Button type="button" mt={5} textColor={'green.700'}>
+                Return Home
+              </Button>
+            </Link>
+          </Stack>
+
+
         </Stack>
       </Box>
     </Flex>

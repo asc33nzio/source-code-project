@@ -74,7 +74,7 @@ export default function Navbar() {
                 console.log("Welcome")
                 console.log(response.data.username);
                 // Check if the response indicates that the user is logged in
-                if (token) { //if (response.headers.authorization) {
+                if (token) { //if (response.headers.authorization) { //not necessary anymore since we are now basing the auth from localstorage
                     dispatch(setLoggedIn());
                 } else {
                     dispatch(setLoggedOut());
@@ -93,7 +93,6 @@ export default function Navbar() {
         localStorage.clear();
         localStorage.setItem('chakra-ui-color-mode', 'dark');
     };
-
 
     return (
         <>
@@ -122,7 +121,7 @@ export default function Navbar() {
                                 ░╚═══██╗██║░░██║██║░░░██║██╔══██╗██║░░██╗██╔══╝░░    ██║░░██╗██║░░██║██║░░██║██╔══╝░░<br />
                                 ██████╔╝╚█████╔╝╚██████╔╝██║░░██║╚█████╔╝███████╗    ╚█████╔╝╚█████╔╝██████╔╝███████╗<br />
                                 ╚═════╝░░╚════╝░░╚═════╝░╚═╝░░╚═╝░╚════╝░╚══════╝    ░╚════╝░░╚════╝░╚═════╝░╚══════╝</Text></Box>
-                        <HStack // Main stack for navbar children elements // md++ displays
+                        <HStack // Main stack for navbar children elements // md++ displays // responsiveness? the fuck is that. got no time fo that. bro had to waste time to make sure the API provider is doing their job right
                             textColor={'#1C1F0C'}
                             fontFamily={'monospace'}
                             fontSize={'20px'}
@@ -137,10 +136,6 @@ export default function Navbar() {
 
                             <NavLink key='Search_Articles' fontWeight={'bold'} to="/">
                                 Search Articles
-                            </NavLink>
-
-                            <NavLink key='Verification' fontWeight={'bold'} to="/verification">
-                                Verify
                             </NavLink>
 
                             <ScrollLink
@@ -190,12 +185,14 @@ export default function Navbar() {
                                             Write Something
                                         </CustomMenuItem>
                                     </ROUTER_LINK>
-                                    <ROUTER_LINK to={"/"}>
+                                    <ROUTER_LINK to={"/god_mode"}>
                                         <CustomMenuItem bg={'#B9AE0C'} fontWeight={'bold'}>
                                             God Mode
                                         </CustomMenuItem>
                                     </ROUTER_LINK>
+
                                     <MenuDivider />
+
                                     <CustomMenuItem bg={'#B9AE0C'} fontWeight={'bold'} onClick={handleLogout}>
                                         Logout
                                     </CustomMenuItem>
@@ -216,7 +213,22 @@ export default function Navbar() {
                                     }}>
                                     Register
                                 </Button>
-                                <Button as={ROUTER_LINK} to="/login_user" fontSize="18px" variant="solid" colorScheme="yellow" size="md"
+
+                                <Button as={ROUTER_LINK} to="/verification" fontSize="18px" variant="solid" colorScheme="yellow" size="md" marginRight="1rem"
+                                    _hover={{
+                                        textColor: '#88012A',
+                                        bg: 'black',
+                                        _before: {
+                                            bg: 'inherit',
+                                        },
+                                        _after: {
+                                            bg: 'inherit',
+                                        },
+                                    }}>
+                                    Verify
+                                </Button>
+
+                                <Button as={ROUTER_LINK} to="/login_user" fontSize="18px" variant="solid" colorScheme="yellow" size="md" 
                                     _hover={{
                                         textColor: '#88012A',
                                         bg: 'black',
@@ -235,7 +247,7 @@ export default function Navbar() {
                     </Flex>
                 </Flex>
 
-                {/* For responsive purposes. Do later when time is abundant. */} 
+                {/* For responsive purposes. Do later when time is abundant. */}
                 {/* {isOpen ? (
                     <Box pb={5} display={{ md: 'block' }}>
                         <Stack as={'nav'} spacing={5}>

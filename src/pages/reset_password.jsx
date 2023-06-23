@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
   Flex,
@@ -10,6 +10,7 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
+  Stack,
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
@@ -31,13 +32,14 @@ const initialValues = {
 
 export const ResetPassword = () => {
   const { token } = useParams();
+  const navigate = useNavigate();
 
   const handleReset = async (values) => {
     try {
       const headers = {
         Authorization: `Bearer ${token}`,
       };
-
+      
       await axios.patch(
         'https://minpro-blog.purwadhikabootcamp.com/api/auth/resetPass',
         {
@@ -47,7 +49,12 @@ export const ResetPassword = () => {
         { headers }
       );
 
-      alert("Password reset success! Please do remember your new password.")
+      // console.log(values);
+      // console.log(values.password);
+      // console.log(values.confirmPassword)
+      alert("Password reset success! Please do remember your new password.");
+      navigate('/');
+
 
     } catch (error) {
       console.error(error);
@@ -84,17 +91,16 @@ export const ResetPassword = () => {
         position={'fixed'}
         inset={'0'}
       >
-        <Flex direction="column" alignItems="center" mt={-3} mr={2} >
+        <Flex direction="column" mt={-3} mr={2} >
           <Flex
             direction={'column'}
             width={'30vw'}
             height={'30vh'}
-            justifyContent={'center'}
             alignItems={'center'}
             position={'relative'}
             fontFamily={'monospace'}
           >
-            <Heading position={'block'} fontFamily={'monospace'} alignContent={'center'} textAlign={'center'} >
+            <Heading position={'block'} fontFamily={'monospace'} textAlign={'center'} >
               Start Fresh With<br />A New Password
             </Heading>
 
@@ -104,7 +110,7 @@ export const ResetPassword = () => {
               onSubmit={handleReset}
             >
               {(formik) => (
-                <Form alignContent={'center'} justifyContent={'center'} alignItems={'center'}>
+                <Form>
                   <Field name="password">
                     {({ field, form }) => (
                       <FormControl
@@ -121,11 +127,11 @@ export const ResetPassword = () => {
                           borderColor={'red'}
                           borderBlock={'red'}
                           focusBorderColor={'red'}
-                          onKeyDown={(event) => {
-                            if (event.key === "Enter") {
-                              handleReset();
-                            }
-                          }}
+                          // onKeyDown={(event) => {
+                          //   if (event.key === "Enter") {
+                          //     handleReset();
+                          //   }
+                          // }} Formik already do this for us so we dont have to define the enter key event handler
                         />
                         <FormErrorMessage>
                           {form.errors.password}
@@ -152,11 +158,11 @@ export const ResetPassword = () => {
                           borderColor={'red'}
                           borderBlock={'red'}
                           focusBorderColor={'red'}
-                          onKeyDown={(event) => {
-                            if (event.key === "Enter") {
-                              handleReset();
-                            }
-                          }}
+                          // onKeyDown={(event) => {
+                          //   if (event.key === "Enter") {
+                          //     handleReset();
+                          //   }
+                          // }}
                         />
                         <FormErrorMessage>
                           {form.errors.confirmPassword}
@@ -165,7 +171,17 @@ export const ResetPassword = () => {
                     )}
                   </Field>
 
-                  <Flex justifyContent={"center"}>
+                  <Stack justifyContent={"space-between"} direction={'row'}>
+                    <Link to={'/'}>
+                      <Button
+                        colorScheme="yellow"
+                        size="md"
+                        mt={5}
+                      >
+                        Return Home
+                      </Button>
+                    </Link>
+
                     <Button
                       colorScheme="yellow"
                       size="md"
@@ -175,7 +191,8 @@ export const ResetPassword = () => {
                     >
                       Confirm Password Reset
                     </Button>
-                  </Flex>
+                  </Stack>
+
                 </Form>
               )}
             </Formik>

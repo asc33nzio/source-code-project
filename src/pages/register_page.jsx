@@ -17,7 +17,7 @@ import {
 import { useNavigate, useParams, Link } from 'react-router-dom'
 
 const validationSchema = Yup.object().shape({
-    username: Yup.string().required('Username is required'),
+    username: Yup.string().required('Username is required').min(3, 'Username must be at least 3 characters'),
     email: Yup.string().email('Invalid e-mail address').required('E-mail is required'),
     phone: Yup.number()
         .typeError('You have a unique number. What universe are you from?')
@@ -45,6 +45,8 @@ export const RegisterPage = () => {
 
     const handleSubmit = async (values, { setSubmitting, setErrors }) => {
         try {
+            // values.FE_URL = "http://localhost:3000" //FOR DEVELOPMENT BUILD NOT PRODUCTION
+            values.FE_URL = "https://scp--sourcecode-project.netlify.app"
             const response = await axios.post(
                 'https://minpro-blog.purwadhikabootcamp.com/api/auth/', values,
                 {
@@ -56,7 +58,7 @@ export const RegisterPage = () => {
             console.log(response.data); 
             
             setTimeout(() => {
-                alert("Before you can use your account, your need to verify. Please check your e-mail and spam folder.")
+                alert("Before you can use your account, your need to verify it first. Please check your e-mail and spam folder. Navigate to the verify page and ")
             }, 500);
 
             navigate("/")
@@ -108,15 +110,15 @@ export const RegisterPage = () => {
                             </FormControl>
 
                             <Flex justify="space-between">
-                                <Button type="submit" colorScheme="yellow" isLoading={isSubmitting} mb={2}>
-                                    Register
-                                </Button>
-
                                 <Link to={'/'}>
                                     <Button colorScheme="yellow" mb={2}>
                                         Return Home
                                     </Button>
                                 </Link>
+                                
+                                <Button type="submit" colorScheme="yellow" isLoading={isSubmitting} mb={2}>
+                                    Register
+                                </Button>
                             </Flex>
 
                             <ErrorMessage name="submit">

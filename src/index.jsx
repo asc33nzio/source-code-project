@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { App } from './App'
 import { RegisterPage } from './pages/register_page';
 import { VerifyAccount } from './pages/verify';
+import { VerifyAuto } from "./pages/verify_auto";
 import { LoginUser } from "./pages/login_username";
 import { Profile } from './pages/profile';
 import { LoginEmail } from "./pages/login_email";
@@ -16,6 +17,7 @@ import { Articles } from './pages/article';
 import { DynamicArticle } from './pages/dynamic_article';
 import { WriteArticle } from "./pages/write_article";
 import { Provider } from 'react-redux';
+import { Delete } from './pages/godmode';
 // import { NotFound } from './pages/404';
 import store from './redux/store';
 
@@ -23,7 +25,7 @@ const BrowserRouter = createBrowserRouter([
   { path: "/", element: <App /> },
   { path: "/register", element: <RegisterPage /> },
   { path: "/verification", element: <VerifyAccount /> },
-  // { path: "/verification/:token", element: <VerifyAccount /> },
+  { path: "/verification/:token", element: <VerifyAuto /> },
   { path: "/profile", element: <Profile /> },
   { path: "/login_user", element: <LoginUser /> },
   { path: "/login_email", element: <LoginEmail /> },
@@ -33,6 +35,7 @@ const BrowserRouter = createBrowserRouter([
   { path: "/article", element: <Articles /> },
   { path: "/article/:id", element: <DynamicArticle /> },
   { path: "/write", element: <WriteArticle /> },
+  { path: "/god_mode", element: <Delete /> },
   // { path: '*', element: <NotFound /> },
 ]);
 
