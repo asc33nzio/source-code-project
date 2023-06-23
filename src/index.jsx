@@ -17,6 +17,7 @@ import { Articles } from './pages/article';
 import { DynamicArticle } from './pages/dynamic_article';
 import { WriteArticle } from "./pages/write_article";
 import { Provider } from 'react-redux';
+import { HeavensDoor } from './pages/heavens_door';
 import { Delete } from './pages/godmode';
 // import { NotFound } from './pages/404';
 import store from './redux/store';
@@ -35,6 +36,7 @@ const BrowserRouter = createBrowserRouter([
   { path: "/article", element: <Articles /> },
   { path: "/article/:id", element: <DynamicArticle /> },
   { path: "/write", element: <WriteArticle /> },
+  { path: "/heavens_door", element: <HeavensDoor /> },
   { path: "/god_mode", element: <Delete /> },
   // { path: '*', element: <NotFound /> },
 ]);

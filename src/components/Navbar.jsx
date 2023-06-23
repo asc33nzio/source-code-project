@@ -185,7 +185,7 @@ export default function Navbar() {
                                             Write Something
                                         </CustomMenuItem>
                                     </ROUTER_LINK>
-                                    <ROUTER_LINK to={"/god_mode"}>
+                                    <ROUTER_LINK to={"/heavens_door"}>
                                         <CustomMenuItem bg={'#B9AE0C'} fontWeight={'bold'}>
                                             God Mode
                                         </CustomMenuItem>

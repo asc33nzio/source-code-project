@@ -58,7 +58,7 @@ export const RegisterPage = () => {
             console.log(response.data); 
             
             setTimeout(() => {
-                alert("Before you can use your account, your need to verify it first. Please check your e-mail and spam folder. Navigate to the verify page and ")
+                alert("Before you can use your account, your need to verify it first. Please check your e-mail and spam folder. Use the verify page if all else fails.")
             }, 500);
 
             navigate("/")

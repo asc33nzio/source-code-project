@@ -89,6 +89,7 @@ export const WriteArticle = () => {
             // Reset form values
             formik.resetForm();
             setSubmitting(true);
+            navigate('/');
         } catch (error) {
             console.error(error);
             setSubmitting(false);

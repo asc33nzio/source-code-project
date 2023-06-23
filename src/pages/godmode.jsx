@@ -12,15 +12,22 @@ import {
     ModalBody,
     ModalCloseButton,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import drain from "../assets/drain.gif";
+import drain from "../assets/drain_1.gif";
 
 export const Delete = () => {
     const token = localStorage.getItem('token');
     const [id, setId] = useState('');
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!localStorage.getItem("entryToHeavenToken")) {
+          navigate('/');
+        }
+      }, [navigate]);
 
     const deleteHandler = async () => {
         setIsConfirmationOpen(true);
@@ -74,7 +81,7 @@ export const Delete = () => {
 
                     <Text fontSize={"20px"} align={'center'} bg={'black'} width={'50vw'} mb={5}>
                         Due to a faulty design in the API,<br />
-                        by being logged in with any verified account will allow you to<br />
+                        being logged in with any verified account will allow you to<br />
                         delete any article of your choosing
                     </Text>
 
@@ -97,11 +104,17 @@ export const Delete = () => {
                     <Text align={'center'} bg={'black'} width={'35vw'}>
                         Just remember the article number and go here for deletion.
                     </Text>
+
+                    <Text align={'center'} bg={'black'} width={'38vw'}>
+                        Feeling chaotic like a true god? Insert some random number to your liking.
+                    </Text>
                 </Stack>
 
                 <Input
                     _placeholder={{
                         color: "red",
+                        textAlign: "center",
+                        lineHeight: "inherit",
                     }}
                     placeholder={"Let's get rid of that bad article..."}
                     color={'red'}
@@ -112,12 +125,13 @@ export const Delete = () => {
                     borderBlock={'red'}
                     focusBorderColor={'red'}
                     onChange={(val) => setId(val.target.value)}
+                    mb={10}
                     onKeyDown={(event) => {
                         if (event.key === "Enter") {
-                            deleteHandler(id);
+                            event.preventDefault();
+                            deleteHandler();
                         }
                     }}
-                    mb={10}
                 />
 
                 <Button
