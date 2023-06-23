@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Box, Text, Flex, Alert, AlertIcon, CloseButton, Spinner, Stack, Button } from '@chakra-ui/react';
+import { Box, Flex, Alert, AlertIcon, CloseButton, Spinner, Button } from '@chakra-ui/react';
 
 export const VerifyAuto = () => {
     const { token } = useParams();
