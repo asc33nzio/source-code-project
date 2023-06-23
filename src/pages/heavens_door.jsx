@@ -23,7 +23,7 @@ export const HeavensDoor = () => {
     const navigate = useNavigate();
 
     const handleEntry = () => {
-        const validEntries = ["julian", "assange", "julianassange", "julian assange", "wikileaks", "wiki leaks"];
+        const validEntries = ["julian", "assange", "julianassange", "julian assange", "wikileaks", "wiki leaks", "freedom fighter", "a revolutionary", "for the people"];
         const enteredValue = proceed.toLowerCase();
 
         if (validEntries.includes(enteredValue)) {
@@ -59,9 +59,9 @@ export const HeavensDoor = () => {
                     <img src={whoami} alt="whoami" />
                 </Box>
 
-                <Stack mt={'10vh'} justifyContent={'center'} justifyItems={'center'} alignContent={'center'} alignItems={'center'} pt={59}>
+                <Stack mt={'10vh'} justifyContent={'center'} justifyItems={'center'} alignContent={'center'} alignItems={'center'} pt={59} >
 
-                    <Text align={'center'} bg={'#0B2208'} width={'23vw'}>
+                    <Text align={'center'} bg={'#0B2208'} width={'23vw'} fontFamily={'monospace'}>
                         Correctly name the person above for entry.
                     </Text>
 
@@ -72,6 +72,7 @@ export const HeavensDoor = () => {
                         color: "red",
                         textAlign: "center",
                         lineHeight: "inherit",
+                        fontFamily: 'monospace'
                     }}
                     placeholder={"Who is he?"}
                     color={"red"}

@@ -17,7 +17,8 @@ import {
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ROUTER_LINK } from "react-router-dom";
 import { Link as ScrollLink } from 'react-scroll';
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import anon from "../assets/default_ava.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { setLoggedIn, setLoggedOut } from '../redux/store';
 import axios from 'axios';
@@ -45,6 +46,7 @@ const NavLink = ({ to, children, fontWeight, fontFamily }) => (
 export default function Navbar() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const isLoggedOut = useSelector(state => state.auth.isLoggedOut);
+    const [userAvatar, setUserAvatar] = useState('');
     const dispatch = useDispatch();
 
     const CustomMenuItem = chakra(MenuItem, {
@@ -70,10 +72,19 @@ export default function Navbar() {
                         },
                     }
                 );
-                console.log("Exit the matrix. Return to the source.")
-                console.log("Welcome")
+
+                if (response.data.imgProfile) {
+                    setUserAvatar(
+                        `https://minpro-blog.purwadhikabootcamp.com/${response.data.imgProfile}`
+                    );
+                } else {
+                    setUserAvatar('');
+                }
+
+                console.log("Exit the matrix. Return to the source.");
+                console.log("Welcome");
                 console.log(response.data.username);
-                // Check if the response indicates that the user is logged in
+                // Conditional to check if the response indicates that the user is logged in
                 if (token) { //if (response.headers.authorization) { //not necessary anymore since we are now basing the auth from localstorage
                     dispatch(setLoggedIn());
                 } else {
@@ -81,7 +92,7 @@ export default function Navbar() {
                 }
             } catch (error) {
                 console.error("Error fetching login status:", error);
-                alert('Cannot verify your credentials. Please login or create an account to enjoy a better experience.')
+                alert('Cannot verify your credentials. Please login or create an account to enjoy a better experience.');
             }
         };
 
@@ -113,7 +124,7 @@ export default function Navbar() {
                                     bg: 'yellow',
                                     cursor: 'pointer'
                                 }}
-                                onClick={() => window.open('https://www.google.com/search?q=What+really+happened+with+Aaron+Swartz?', '_blank')}
+                                onClick={() => window.open('https://www.google.com/search?q=What+really+happened+to+Aaron+Swartz?', '_blank')}
                             >
                                 ░██████╗░█████╗░██╗░░░██╗██████╗░░█████╗░███████╗    ░█████╗░░█████╗░██████╗░███████╗<br />
                                 ██╔════╝██╔══██╗██║░░░██║██╔══██╗██╔══██╗██╔════╝    ██╔══██╗██╔══██╗██╔══██╗██╔════╝<br />
@@ -121,7 +132,7 @@ export default function Navbar() {
                                 ░╚═══██╗██║░░██║██║░░░██║██╔══██╗██║░░██╗██╔══╝░░    ██║░░██╗██║░░██║██║░░██║██╔══╝░░<br />
                                 ██████╔╝╚█████╔╝╚██████╔╝██║░░██║╚█████╔╝███████╗    ╚█████╔╝╚█████╔╝██████╔╝███████╗<br />
                                 ╚═════╝░░╚════╝░░╚═════╝░╚═╝░░╚═╝░╚════╝░╚══════╝    ░╚════╝░░╚════╝░╚═════╝░╚══════╝</Text></Box>
-                        <HStack // Main stack for navbar children elements // md++ displays // responsiveness? the fuck is that. got no time fo that. bro had to waste time to make sure the API provider is doing their job right
+                        <HStack // Main stack for navbar children elements // md++ displays // responsiveness? the fuck is that. got no time for that. bro had to waste time making sure the API provider is doing their job right
                             textColor={'#1C1F0C'}
                             fontFamily={'monospace'}
                             fontSize={'20px'}
@@ -172,7 +183,9 @@ export default function Navbar() {
                                     variant={'link'}
                                     cursor={'pointer'}
                                     minW={0}>
-                                    <Avatar size={'sm'} src={null} />
+                                    <Avatar
+                                        size={'lg'}
+                                        src={ userAvatar || anon } />
                                 </MenuButton>
                                 <MenuList zIndex={100} bg={'#B9AE0C'} color={'#259A80'} fontWeight={'bold'} fontFamily={'monospace'} fontSize={'15px'}>
                                     <ROUTER_LINK to={"/profile"}>
@@ -228,7 +241,7 @@ export default function Navbar() {
                                     Verify
                                 </Button>
 
-                                <Button as={ROUTER_LINK} to="/login_user" fontSize="18px" variant="solid" colorScheme="yellow" size="md" 
+                                <Button as={ROUTER_LINK} to="/login_user" fontSize="18px" variant="solid" colorScheme="yellow" size="md"
                                     _hover={{
                                         textColor: '#88012A',
                                         bg: 'black',

@@ -125,7 +125,7 @@ export const WriteArticle = () => {
                             height="15rem"
                             maxHeight={'15rem'}
                             color={'#259A80'}
-                            placeholder="Write something cool. Maximum 300 characters long or its no good. Running servers ain't cheap."
+                            placeholder="Write something cool. Maximum 300 characters long or its no good. Running servers ain't cheap. Also, you can use inherent HTML tags in your article such as <b>Your bold text here</b> or <br> at the end of a sentence to create a line break."
                         />
                         <FormErrorMessage>{formik.errors.content}</FormErrorMessage>
                     </FormControl>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import {
   Box,
   Flex,
@@ -11,114 +10,71 @@ import {
   Img,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { Form } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
+import anon from "../assets/default_ava.jpg";
 
 export function Profile() {
-  // const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
-
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [profilePicture] = useState(     //const [profilePicture, setProfilePicture] = useState(
-    "https://minpro-blog.purwadhikabootcamp.com/Public/Avatar-6.png"
-  );
-  const [typedValue] = useState(""); //const [typedValue, setTypedValue] = useState("");
+  const token = localStorage.getItem('token');
+  const initialPp = localStorage.getItem('profilePicture') || anon; // Get profile picture from local storage or use 'anon' as initial value
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState(0);
+  const [pp, setPp] = useState(initialPp);
 
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get("/api/profile");
-        const { username, email, phone } = response.data;
+        const header = {
+          Authorization: `Bearer ${token}`,
+        };
+
+        const response = await axios.get("https://minpro-blog.purwadhikabootcamp.com/api/auth/", { headers: header });
+        const { username, email, phone, imgProfile } = response.data;
         setUsername(username);
         setEmail(email);
         setPhone(phone);
+
+        if (imgProfile !== null) { // Conditional to avoid CORB flags for users with no avatars
+          setPp(`https://minpro-blog.purwadhikabootcamp.com/${imgProfile}`);
+          localStorage.setItem('profilePicture', `https://minpro-blog.purwadhikabootcamp.com/${imgProfile}`); 
+        }
       } catch (error) {
-        console.error("Error fetching profile data:", error);
-        // Handle error state or show error message
+        console.error("Error fetching profile data.", error);
       }
     };
 
     fetchProfileData();
-  }, []);
+  }, [token]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await axios.put("/api/profile", {
-        username,
-        email,
-        phone,
-      });
-      console.log("Profile updated:", response.data);
-      // Show success message or perform any other necessary actions
-    } catch (error) {
-      console.error("Error updating profile:", error);
-      // Handle error state or show error message
-    }
-  };
-
-  const handleChangeEmail = async () => {
-    const currentEmail = "";
-    const newEmail = "";
-
-    const headers = {
-      Authorization: `Bearer ${auth.authToken}`,
-    };
-
-    try {
-      const response = await axios.patch(
-        "https://minpro-blog.purwadhikabootcamp.com/api/auth/changeEmail",
-        {
-          currentEmail,
-          newEmail,
-        },
-        {
-          headers,
-        }
-      );
-      console.log("Email updated:", response.data);
-      // Show success message or perform any other necessary actions
-    } catch (error) {
-      console.error("Error updating email:", error);
-      // Handle error state or show error message
-    }
-  };
-
-  const handleProfilePictureUpload = async (e) => {
-    const file = e.target.files[0];
+  const handleProfilePictureUpload = async () => {
+    const fileInput = document.getElementById('profilePicture');
+    const file = fileInput.files[0];
 
     const formData = new FormData();
-    formData.append("profilePicture", file);
-
-    const headers = {
-      Authorization: `Bearer ${auth.authToken}`,
-    };
+    formData.append('file', file);
 
     try {
       const response = await axios.post(
-        "https://minpro-blog.purwadhikabootcamp.com/api/profile/single-uploaded",
+        'https://minpro-blog.purwadhikabootcamp.com/api/profile/single-uploaded',
         formData,
         {
-          headers,
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log("Profile picture updated:", response.data);
-      // Show success message or perform any other necessary actions
+
+      console.log('Profile picture updated.');
+      alert('Profile picture has been updated.');
+      // Update the pp state with the new profile picture
+      setPp(`https://minpro-blog.purwadhikabootcamp.com/${response.data.imgProfile}`);
+      localStorage.setItem('profilePicture', `https://minpro-blog.purwadhikabootcamp.com/${response.data.imgProfile}`);
     } catch (error) {
-      console.error("Error updating profile picture:", error);
-      // Handle error state or show error message
+      console.error('Error updating profile picture. Please try again.', error);
+      alert('Error updating profile picture. Please try again.', error);
     }
   };
 
-  // const handleInputChange = (e) => {
-  //   setTypedValue(e.target.value);
-  // };
-
   return (
     <Box
-      p={8}
       bg="#A09006"
       color="black"
       display="flex"
@@ -131,99 +87,71 @@ export function Profile() {
           bg="white"
           borderRadius="full"
           overflow="hidden"
-          mb={4}
+          mb={8}
           width="150px"
           height="150px"
         >
           <Img
-            src={profilePicture}
-            alt="Profile"
+            src={pp}
+            alt={`${username}'s avatar`}
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
         </Box>
 
-        <Text mb={2} fontWeight="bold">
-          Username: {username}
-        </Text>
-        <Text mb={2} fontWeight="bold">
-          Email: {email}
-        </Text>
-        <Text mb={4} fontWeight="bold">
-          Phone number: {phone}
-        </Text>
+        <Box mb={2} align={'center'} fontSize={'20px'} fontFamily={'papyrus'}>
+          Username:
+          <Text fontWeight={'bold'} fontSize={'23px'} fontFamily={'monospace'} color={'#88012A'}>
+            {username}
+          </Text>
+        </Box>
+        <Box mb={2} align={'center'} fontSize={'20px'} fontFamily={'papyrus'}>
+          Email:
+          <Text fontWeight={'bold'} fontSize={'23px'} fontFamily={'monospace'}>
+            {email}
+          </Text>
+        </Box>
+        <Box mb={4} align={'center'} fontSize={'20px'} fontFamily={'papyrus'}>
+          Phone Number:
+          <Text fontWeight={'bold'} fontSize={'23px'} fontFamily={'monospace'}>
+            {phone}
+          </Text>
+        </Box>
 
-        <Form onSubmit={handleSubmit}>
-          <FormControl mb={2}>
-            <FormLabel>Update username:</FormLabel>
-            <Input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              variant="filled"
-              _focus={{ outline: "none" }}
-              color={typedValue ? "red" : "black"}
-            //   onChange={handleInputChange}
-            />
-          </FormControl>
+        <Form align={'center'}>
 
           <FormControl mb={2}>
-            <FormLabel>Update Email:</FormLabel>
+            <FormLabel fontFamily={'monospace'} htmlFor={'profilePicture'}>Upload profile picture:</FormLabel>
             <Input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              variant="filled"
-              _focus={{ outline: "none" }}
-              color={typedValue ? "red" : "black"}
-            //   onChange={handleInputChange}
-            />
-          </FormControl>
-
-          <FormControl mb={2}>
-            <FormLabel>Update Phone number:</FormLabel>
-            <Input
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              variant="filled"
-              _focus={{ outline: "none" }}
-              color={typedValue ? "red" : "black"}
-            //   onChange={handleInputChange}
-            />
-          </FormControl>
-
-          <FormControl mb={2}>
-            <FormLabel>Upload profile picture:</FormLabel>
-            <Input
+              fontFamily={'monospace'}
               type="file"
-              onChange={handleProfilePictureUpload}
+              id="profilePicture"
               variant="filled"
               _focus={{ outline: "none" }}
-              color={typedValue ? "red" : "black"}
-            //   onChange={handleInputChange}
             />
           </FormControl>
+
+          <Button
+            type="submit"
+            colorScheme="yellow"
+            size="md" mb={2}
+            fontFamily={'monospace'}
+            onClick={handleProfilePictureUpload}
+          >
+            Update Profile Picture
+          </Button>
+
         </Form>
 
-
-          <Button type="submit" colorScheme="yellow" size="md" mb={2}>
-            Update Profile
-          </Button>
-          <Button
-            onClick={handleChangeEmail}
-            colorScheme="yellow"
-            size="md"
-            mb={2}
-          >
-            Change Email
-          </Button>
+        <Button as={Link}
+          to={'/'}
+          colorScheme="yellow"
+          size="md" mb={2}
+          fontFamily={'monospace'}>
+          Return Home
+        </Button>
 
       </Flex>
-      <Box mt={8} ml={150}>
-        <Text fontWeight="bold">Liked Articles</Text>
-        {/* Display the list of liked articles */}
-        {/* ... */}
-      </Box>
+
     </Box>
   );
 }
