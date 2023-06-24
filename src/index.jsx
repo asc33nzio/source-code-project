@@ -7,8 +7,8 @@ import { App } from './App'
 import { RegisterPage } from './pages/register_page';
 import { VerifyAccount } from './pages/verify';
 import { VerifyAuto } from "./pages/verify_auto";
-import { LoginUser } from "./pages/login_username";
 import { Profile } from './pages/profile';
+import { LoginUser } from "./pages/login_username";
 import { LoginEmail } from "./pages/login_email";
 import { LoginPhone } from "./pages/login_phone";
 import { Forget } from './pages/forget';

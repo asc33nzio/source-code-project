@@ -39,7 +39,7 @@ export default function Hero() {
 
     return (
         <Flex
-            w={'full'}
+            w={'102vw'}
             h={'100vh'}
             backgroundImage={`url(${hero_bg})`}
             backgroundSize={'cover'}

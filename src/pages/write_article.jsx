@@ -24,6 +24,12 @@ export const WriteArticle = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (!token) {
+          navigate("/login_user");
+        }
+      }, [token, navigate]);
+
+    useEffect(() => {
         axios
             .get('https://minpro-blog.purwadhikabootcamp.com/api/blog/allCategory')
             .then((response) => {

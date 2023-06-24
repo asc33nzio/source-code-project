@@ -13,14 +13,21 @@ import {
     ModalCloseButton,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import drain from "../assets/drain_2.gif";
 import whoami from "../assets/whoami.jpg";
 
 export const HeavensDoor = () => {
+    const token = localStorage.getItem('token');
     const [proceed, setProceed] = useState("");
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!token) {
+          navigate("/login_user");
+        }
+      }, [token, navigate]);
 
     const handleEntry = () => {
         const validEntries = ["julian", "assange", "julianassange", "julian assange", "wikileaks", "wiki leaks", "freedom fighter", "a revolutionary", "for the people"];

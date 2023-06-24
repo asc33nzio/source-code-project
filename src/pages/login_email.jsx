@@ -68,9 +68,6 @@ export function LoginEmail() {
     } catch (error) {
       console.error(error);
       alert('Incorrect e-mail or password')
-      // Handle error or display error message to the user
-      // alert('Incorrect username or password')
-
     }
   };
 

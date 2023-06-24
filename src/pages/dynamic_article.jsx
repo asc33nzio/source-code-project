@@ -69,20 +69,21 @@ export function DynamicArticle() {
 
     return (
         <>
-            <Stack direction={'column'} width={'100%'} height={'100%'} bgColor={'#A09006'}>
+            <Stack direction={'column'} width={'102vw'} height={'100%'} bgColor={'#A09006'}>
                 <Navbar />
 
                 <Stack direction={'column'} w={'50vw'} h={'200vh'} bgColor={'#A09006'} alignContent={'center'}>
                     <Stack
                         key={article.id}
                         direction={'column'}
-                        w={'100vw'}
+                        w={'102vw'}
                         h={'165vh'}
                         bgColor={'#A09006'}
                         alignContent={'center'}
                         justifyContent={'center'}
                         alignItems={'center'}
                         justifyItems={'center'}
+                        width={'102vw'}
                     >
                         <Heading fontFamily={'monospace'} fontSize={'50px'} textColor={'black'} pb={8}>
                             {ReactHtmlParser(article.title)}
@@ -133,6 +134,7 @@ export function DynamicArticle() {
                                 justifyContent={'flex-end'}
                                 alignItems={'flex-end'}
                                 justifyItems={'flex-end'}
+                                marginRight={'30px'}
                             >
                                 <Stack direction={'column'} bgColor={'#A09006'}>
                                     <Text fontFamily={'monospace'} fontSize={'18px'} textColor={'black'} bgColor={'#A09006'}>

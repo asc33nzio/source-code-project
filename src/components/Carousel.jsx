@@ -42,7 +42,7 @@ export default function Carousel() {
   }, []);
 
   return (
-    <Flex bg='black' justifyContent='center' justifyItems='center' alignContent='center' alignItems='center'>
+    <Flex bg='black' justifyContent='center' justifyItems='center' alignContent='center' alignItems='center' w={'102vw'}>
       <Swiper
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
         spaceBetween={15}

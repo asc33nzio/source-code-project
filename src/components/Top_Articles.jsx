@@ -62,7 +62,7 @@ export default function Top_Articles() {
   }, []);
 
   return (
-    <Box p={4} bg={'#A09006'}>
+    <Box p={4} bg={'#A09006'} w={'102vw'}>
       <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
         <Heading fontSize={{ base: '2xl', sm: '4xl' }} fontWeight={'bold'} color={'white'}>
           Latest Articles

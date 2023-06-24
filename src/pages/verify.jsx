@@ -25,7 +25,9 @@ export const VerifyAccount = () => {
 
       alert("Verification successful! You may now login.");
       alert("PS. Yes, it's quite a tedious process, sorry. Don't blame me. I'm not the API provider.");
-      alert("Enjoy your stay!")
+      alert("Please feel free to express yourself, write whatever you feel!");
+      alert("To start, why not upload a profile picture?");
+      alert("Happy blogging! Enjoy your stay!");
 
       const interval = setInterval(() => {
         setCountdown((prevCountdown) => prevCountdown - 1);

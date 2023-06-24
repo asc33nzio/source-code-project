@@ -131,7 +131,7 @@ export const ResetPassword = () => {
                           //   if (event.key === "Enter") {
                           //     handleReset();
                           //   }
-                          // }} Formik already do this for us so we dont have to define the enter key event handler
+                          // }} Formik already does this for us so we dont have to define the enter key event handler
                         />
                         <FormErrorMessage>
                           {form.errors.password}

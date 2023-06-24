@@ -111,7 +111,7 @@ export default function Navbar() {
           const isMobileResolution = window.innerWidth < 1024;
     
           if (isMobileResolution) {
-            navigate("/404");
+            navigate(`/where's_waldo`);
             alert("Sorry! This app is not optimized to be used on mobile displays. Please open on a PC.");
           }
         };
@@ -127,7 +127,7 @@ export default function Navbar() {
 
     return (
         <>
-            <Box bg={'#A09006'} px={4} position="sticky" top={0} zIndex={100} w={'100vw'}>
+            <Box bg={'#A09006'} px={4} position="sticky" top={0} zIndex={100} w={'102vw'}>
                 <Flex h={100} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}

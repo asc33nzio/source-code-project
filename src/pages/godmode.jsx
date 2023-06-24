@@ -24,6 +24,12 @@ export const Delete = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (!token) {
+          navigate("/login_user");
+        }
+      }, [token, navigate]);
+
+    useEffect(() => {
         if (!localStorage.getItem("entryToHeavenToken")) {
           navigate('/');
         }

@@ -21,9 +21,9 @@ export function Articles() {
         <>
             <Navbar />
 
-            <Stack direction={'column'} w={'100vw'} h={'200vh'} bgColor={'#A09006'} alignContent={'center'} >
+            <Stack direction={'column'} w={'102vw'} h={'200vh'} bgColor={'#A09006'} alignContent={'center'} >
                 {article && ( // Check if article is not null before rendering
-                    <Stack direction={'column'} w={'100vw'} h={'165vh'} bgColor={'#A09006'} alignContent={'center'} justifyContent={'center'} alignItems={'center'} justifyItems={'center'}>
+                    <Stack direction={'column'} w={'102vw'} h={'165vh'} bgColor={'#A09006'} alignContent={'center'} justifyContent={'center'} alignItems={'center'} justifyItems={'center'}>
                         <Img src={`https://minpro-blog.purwadhikabootcamp.com/${article.imageURL}`} />
                         <Heading fontFamily={'monospace'} fontSize={'50px'} textColor={'black'}>{article.title}</Heading>
                         <Text fontFamily={'monospace'} fontSize={'25px'} textColor={'#88012A'}>{article.content}</Text>

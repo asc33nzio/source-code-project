@@ -70,7 +70,6 @@ export function LoginPhone() {
     } catch (error) {
       console.error(error);
       alert('Incorrect phone number or password');
-      // Handle error or display error message to the user
     }
   };
 

@@ -17,7 +17,10 @@ export const VerifyAuto = () => {
             try {
                 const response = await axios.patch(`https://minpro-blog.purwadhikabootcamp.com/api/auth/verify/`, {}, { headers: header });
 
-                alert('Verification successful! You may now login.');
+                alert("Verification successful! You may now login.");
+                alert("Please feel free to express yourself, write whatever you feel!");
+                alert("To start, why not upload a profile picture?");
+                alert("Happy blogging! Enjoy your stay!");
 
                 const interval = setInterval(() => {
                     setCountdown((prevCountdown) => prevCountdown - 1);

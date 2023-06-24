@@ -10,16 +10,23 @@ import {
   Img,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import anon from "../assets/default_ava.jpg";
 
 export function Profile() {
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
   const initialPp = localStorage.getItem('profilePicture') || anon; // Get profile picture from local storage or use 'anon' as initial value
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState(0);
   const [pp, setPp] = useState(initialPp);
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login_user");
+    }
+  }, [token, navigate]);
 
   useEffect(() => {
     const fetchProfileData = async () => {

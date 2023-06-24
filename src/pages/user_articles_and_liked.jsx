@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Flex, Box, Button, Heading, Text, Stack } from '@chakra-ui/react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import ban_1 from "../assets/ban_1.jpg";
 import ban_2 from "../assets/ban_2.jpg";
@@ -10,15 +10,25 @@ import ban_5 from "../assets/ban_5.jpg";
 import ban_6 from "../assets/ban_6.jpg";
 import ban_7 from "../assets/ban_7.jpg";
 import ban_8 from "../assets/ban_8.jpg";
+import ReactHtmlParser from 'html-react-parser';
 
 const bannerImages = [ban_1, ban_2, ban_3, ban_4, ban_5, ban_6, ban_7, ban_8];
 
 export function UserArticlesPage() {
     const token = localStorage.getItem('token');
+    const navigate = useNavigate();
     const [userArticles, setUserArticles] = useState([]);
     const [likedArticles, setLikedArticles] = useState([]);
     const [userArticlesPage, setUserArticlesPage] = useState(1);
     const [likedArticlesPage, setLikedArticlesPage] = useState(1);
+    const [userArticlesTotalPages, setUserArticlesTotalPages] = useState(1);
+    const [likedArticlesTotalPages, setLikedArticlesTotalPages] = useState(1);
+
+    useEffect(() => {
+        if (!token) {
+          navigate("/login_user");
+        }
+      }, [token, navigate]);
 
     const fetchUserArticles = useCallback(async () => {
         try {
@@ -31,6 +41,7 @@ export function UserArticlesPage() {
                 }
             );
             setUserArticles(response.data.result);
+            setUserArticlesTotalPages(response.data.page);
         } catch (error) {
             console.error('Failed to fetch user articles:', error);
         }
@@ -47,6 +58,17 @@ export function UserArticlesPage() {
                 }
             );
             setLikedArticles(response.data.result);
+            console.log(response.data)
+
+            // Check if the response result is empty because the idiotic API defines the page size of ALL total articles in the DB rather than total liked articles how IDIOTIC
+            if (response.data.result.length === 0) {
+                setLikedArticlesTotalPages(likedArticlesPage);
+            } else if (response.data.result.length === 8) {
+                setLikedArticlesTotalPages(likedArticlesPage + 1);
+            } else {
+                setLikedArticlesTotalPages(likedArticlesPage);
+            }
+
         } catch (error) {
             console.error('Failed to fetch liked articles:', error);
         }
@@ -58,19 +80,19 @@ export function UserArticlesPage() {
     }, [fetchUserArticles, fetchLikedArticles]);
 
     const handlePrevUserArticlesPage = () => {
-        setUserArticlesPage(page => page - 1);
+        setUserArticlesPage((page) => Math.max(page - 1, 1));
     };
 
     const handleNextUserArticlesPage = () => {
-        setUserArticlesPage(page => page + 1);
+        setUserArticlesPage((page) => Math.min(page + 1, userArticlesTotalPages));
     };
 
     const handlePrevLikedArticlesPage = () => {
-        setLikedArticlesPage(page => page - 1);
+        setLikedArticlesPage((page) => Math.max(page - 1, 1));
     };
 
     const handleNextLikedArticlesPage = () => {
-        setLikedArticlesPage(page => page + 1);
+        setLikedArticlesPage((page) => Math.min(page + 1, likedArticlesTotalPages));
     };
 
     return (
@@ -116,17 +138,15 @@ export function UserArticlesPage() {
                             backgroundPosition: 'center',
                         }}
                     >
-                        <a href={`/article/${article.id}`} rel={"noreferrer noopener"} target='_blank'>
-                            <Heading as="h3" size="md" mb={2} color={'#88012A'}>
-                                {article.title}
+                        <Link to={`/article/${article.id}`} target="_blank" rel="noreferrer noopener">
+                            <Heading as="h2" size="md" mb={2} color={'#88012A'}>
+                                {ReactHtmlParser(article.title)}
                             </Heading>
-                        </a>
 
-                        <a href={`/article/${article.id}`} rel={"noreferrer noopener"} target='_blank'>
                             <Text color={'yellow.400'}>
-                                {article.content}
+                                {ReactHtmlParser(article.content)}
                             </Text>
-                        </a>
+                        </Link>
 
                     </Box>
                 ))}
@@ -135,6 +155,10 @@ export function UserArticlesPage() {
                     <Button
                         mt={4}
                         onClick={handlePrevUserArticlesPage}
+                        disabled={userArticlesPage === 1}
+                        colorScheme="black"
+                        background={'black'}
+                        color={'white'}
                         _hover={{
                             textColor: '#88012A',
                             bg: 'black',
@@ -149,9 +173,15 @@ export function UserArticlesPage() {
                         Previous Page
                     </Button>
 
+                    <Text color={'white'} fontFamily={'monospace'}>{`Page ${userArticlesPage} of ${userArticlesTotalPages}`}</Text>
+
                     <Button
                         mt={4}
                         onClick={handleNextUserArticlesPage}
+                        disabled={userArticlesPage === userArticlesTotalPages}
+                        colorScheme="black"
+                        background={'black'}
+                        color={'white'}
                         _hover={{
                             textColor: '#88012A',
                             bg: 'black',
@@ -165,6 +195,8 @@ export function UserArticlesPage() {
                     >
                         Next Page
                     </Button>
+
+
                 </Stack>
             </Box>
 
@@ -210,25 +242,25 @@ export function UserArticlesPage() {
                         }}
                     >
 
-                        <a href={`/article/${article.BlogId}`} rel={"noreferrer noopener nofollow"} target='_blank'>
+                        <Link to={`/article/${article.BlogId}`} target="_blank" rel="noreferrer noopener">
                             <Heading as="h3" size="md" mb={2} color={'white'}>
-                                {article.Blog.title}
+                                {ReactHtmlParser(article.Blog.title)}
                             </Heading>
-                        </a>
 
-                        <a href={`/article/${article.BlogId}`} rel={"noreferrer noopener nofollow"} target='_blank'>
                             <Text color={'white'}>
-                                {article.Blog.content}
+                                {ReactHtmlParser(article.Blog.content)}
                             </Text>
-                        </a>
+                        </Link>
                     </Box>
                 ))}
 
                 <Stack direction={'row'} justify={'space-between'}>
+
                     <Button
                         mt={4}
                         onClick={handlePrevLikedArticlesPage}
-                        colorScheme='black'
+                        disabled={likedArticlesPage === 1}
+                        colorScheme="black"
                         background={'black'}
                         color={'white'}
                         _hover={{
@@ -240,13 +272,18 @@ export function UserArticlesPage() {
                             _after: {
                                 bg: 'inherit',
                             },
-                        }}>
+                        }}
+                    >
                         Previous Page
                     </Button>
 
-                    <Button mt={4}
+                    <Text color={'black'} fontFamily={'monospace'}>{`Page ${likedArticlesPage} of ${likedArticlesTotalPages}`}</Text>
+
+                    <Button
+                        mt={4}
                         onClick={handleNextLikedArticlesPage}
-                        colorScheme='black'
+                        disabled={likedArticlesPage === likedArticlesTotalPages}
+                        colorScheme="black"
                         background={'black'}
                         color={'white'}
                         _hover={{
@@ -258,7 +295,8 @@ export function UserArticlesPage() {
                             _after: {
                                 bg: 'inherit',
                             },
-                        }}>
+                        }}
+                    >
                         Next Page
                     </Button>
                 </Stack>
