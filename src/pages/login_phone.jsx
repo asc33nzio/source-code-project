@@ -111,6 +111,7 @@ export function LoginPhone() {
           width={'30vw'}
           height={'30vh'}
           justifyContent={'center'}
+          alignItems={'center'}
           position={'relative'}
           fontFamily={'monospace'}
         >

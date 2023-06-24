@@ -29,8 +29,6 @@ export default function Carousel() {
         const response = await fetch('https://minpro-blog.purwadhikabootcamp.com/api/blog/pagFav?page=1&orderBy=total_fav&sort=DESC');
         if (response.ok) {
           const data = await response.json();
-          // console.log(response);
-          // console.log(data);
           setArticles(data.result)
         } else {
           console.error('failed to fetch articles.', response.status, response.statusText);

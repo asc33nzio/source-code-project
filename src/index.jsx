@@ -19,7 +19,8 @@ import { WriteArticle } from "./pages/write_article";
 import { Provider } from 'react-redux';
 import { HeavensDoor } from './pages/heavens_door';
 import { Delete } from './pages/godmode';
-// import { NotFound } from './pages/404';
+import { UserArticlesPage } from './pages/user_articles_and_liked';
+import { NotFound } from './pages/404';
 import store from './redux/store';
 
 const BrowserRouter = createBrowserRouter([
@@ -38,7 +39,8 @@ const BrowserRouter = createBrowserRouter([
   { path: "/write", element: <WriteArticle /> },
   { path: "/heavens_door", element: <HeavensDoor /> },
   { path: "/god_mode", element: <Delete /> },
-  // { path: '*', element: <NotFound /> },
+  { path: "/user_articles", element: <UserArticlesPage /> },
+  { path: '*', element: <NotFound /> },
 ]);
 
 const colorModeConfig = {

@@ -15,7 +15,7 @@ import {
     Text,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import { Link as ROUTER_LINK } from "react-router-dom";
+import { Link as ROUTER_LINK, useNavigate } from "react-router-dom";
 import { Link as ScrollLink } from 'react-scroll';
 import React, { useEffect, useState } from "react";
 import anon from "../assets/default_ava.jpg";
@@ -48,6 +48,7 @@ export default function Navbar() {
     const isLoggedOut = useSelector(state => state.auth.isLoggedOut);
     const [userAvatar, setUserAvatar] = useState('');
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const CustomMenuItem = chakra(MenuItem, {
         baseStyle: {
@@ -104,6 +105,25 @@ export default function Navbar() {
         localStorage.clear();
         localStorage.setItem('chakra-ui-color-mode', 'dark');
     };
+
+    useEffect(() => {
+        const checkWindowWidth = () => {
+          const isMobileResolution = window.innerWidth < 1024;
+    
+          if (isMobileResolution) {
+            navigate("/404");
+            alert("Sorry! This app is not optimized to be used on mobile displays. Please open on a PC.");
+          }
+        };
+    
+        checkWindowWidth(); // INITIAL CHECK
+    
+        const interval = setInterval(checkWindowWidth, 500); 
+    
+        return () => {
+          clearInterval(interval);
+        };
+      }, [navigate]);
 
     return (
         <>
@@ -193,11 +213,19 @@ export default function Navbar() {
                                             Profile
                                         </CustomMenuItem>
                                     </ROUTER_LINK>
+
                                     <ROUTER_LINK to={"/write"}>
                                         <CustomMenuItem bg={'#B9AE0C'} fontWeight={'bold'}>
                                             Write Something
                                         </CustomMenuItem>
                                     </ROUTER_LINK>
+
+                                    <ROUTER_LINK to={"/user_articles"}>
+                                        <CustomMenuItem bg={'#B9AE0C'} fontWeight={'bold'}>
+                                            Your Articles
+                                        </CustomMenuItem>
+                                    </ROUTER_LINK>
+
                                     <ROUTER_LINK to={"/heavens_door"}>
                                         <CustomMenuItem bg={'#B9AE0C'} fontWeight={'bold'}>
                                             God Mode

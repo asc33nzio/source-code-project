@@ -6,10 +6,37 @@ import {
     VStack,
     useBreakpointValue,
 } from '@chakra-ui/react';
-import { Link as ROUTER_LINK } from "react-router-dom";
+import { Link as ROUTER_LINK, useNavigate } from "react-router-dom";
 import hero_bg from '../assets/hero_bg.jpg';
+import axios from "axios";
 
 export default function Hero() {
+    const navigate = useNavigate();
+
+    const handleLike = async () => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/login_user");
+            return;
+        }
+
+        try {
+            const response = await axios.post(
+                "https://minpro-blog.purwadhikabootcamp.com/api/blog/like",
+                { BlogId: 211 },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                    "Content-Type": "application/json",
+                }
+            );
+            console.log(response.data);
+            alert("Article added to liked list.");
+        } catch (error) {
+            console.log(error);
+            alert("This article is already in your liked list.");
+        }
+    };
+
     return (
         <Flex
             w={'full'}
@@ -39,21 +66,23 @@ export default function Hero() {
                         Its builders say that’s just the start.
                     </Text>
                     <Stack direction={'row'}>
-                            <ROUTER_LINK to={"/article/211"}>
-                                <Button
-                                    bg={'#88012A'}
-                                    rounded={'full'}
-                                    color={'black'}
-                                    _hover={{ bg: '#FEE101' }}
-                                >
-                                    Read Article
-                                </Button>
-                            </ROUTER_LINK>
+                        <ROUTER_LINK to={"/article/211"}>
+                            <Button
+                                bg={'#88012A'}
+                                rounded={'full'}
+                                color={'black'}
+                                _hover={{ bg: '#FEE101' }}
+                            >
+                                Read Article
+                            </Button>
+                        </ROUTER_LINK>
                         <Button
                             bg={'#FD2171'}
                             rounded={'full'}
                             color={'black'}
-                            _hover={{ bg: '#FEE101' }}>
+                            _hover={{ bg: '#FEE101' }}
+                            onClick={handleLike}
+                        >
                             Add to Liked Articles
                         </Button>
                     </Stack>
