@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
     Flex,
@@ -16,6 +16,10 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 export const validationSchema = Yup.object().shape({
+    currentPassword: Yup.string()
+        .min(6, 'Password must be at least 6 characters')
+        .matches(/^(?=.*[A-Z])(?=.*\W).+$/, 'Password must contain an uppercase letter and a symbol')
+        .required('Old password is required'),
     password: Yup.string()
         .min(6, 'Password must be at least 6 characters')
         .matches(/^(?=.*[A-Z])(?=.*\W).+$/, 'Password must contain an uppercase letter and a symbol')
@@ -26,12 +30,13 @@ export const validationSchema = Yup.object().shape({
 });
 
 const initialValues = {
+    currentPassword: '',
     password: '',
     confirmPassword: '',
 };
 
 export const ChangePassword = () => {
-    const { token } = useParams();
+    const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
     const handleReset = async (values) => {
@@ -41,24 +46,19 @@ export const ChangePassword = () => {
             };
 
             await axios.patch(
-                'https://minpro-blog.purwadhikabootcamp.com/api/auth/resetPass',
-                {
-                    password: values.password,
-                    confirmPassword: values.confirmPassword
-                },
+                'https://minpro-blog.purwadhikabootcamp.com/api/auth/changePass',
+                values,
                 { headers }
             );
-
-            // console.log(values);
-            // console.log(values.password);
-            // console.log(values.confirmPassword)
-            alert("Password reset success! Please do remember your new password.");
-            navigate('/');
+            
+            localStorage.clear();
+            alert("Password change successful! Please verify and login again.");
+            navigate('/login_user');
 
 
         } catch (error) {
             console.error(error);
-            alert("Password reset unsuccessful. Please try again.")
+            alert("Password change unsuccessful. Please try again.")
         }
     };
 
@@ -111,6 +111,30 @@ export const ChangePassword = () => {
                         >
                             {(formik) => (
                                 <Form>
+                                    <Field name="currentPassword">
+                                        {({ field, form }) => (
+                                            <FormControl
+                                                isInvalid={form.errors.currentPassword && form.touched.currentPassword}
+                                                mt={3}
+                                            >
+                                                <Input
+                                                    {...field}
+                                                    id="currentPassword"
+                                                    placeholder="Enter your old password"
+                                                    type="password"
+                                                    w={'50vh'}
+                                                    position={"relative"}
+                                                    borderColor={'red'}
+                                                    borderBlock={'red'}
+                                                    focusBorderColor={'red'}
+                                                />
+                                                <FormErrorMessage>
+                                                    {form.errors.password}
+                                                </FormErrorMessage>
+                                            </FormControl>
+                                        )}
+                                    </Field>
+
                                     <Field name="password">
                                         {({ field, form }) => (
                                             <FormControl
@@ -127,11 +151,6 @@ export const ChangePassword = () => {
                                                     borderColor={'red'}
                                                     borderBlock={'red'}
                                                     focusBorderColor={'red'}
-                                                // onKeyDown={(event) => {
-                                                //   if (event.key === "Enter") {
-                                                //     handleReset();
-                                                //   }
-                                                // }} Formik already does this for us so we dont have to define the enter key event handler
                                                 />
                                                 <FormErrorMessage>
                                                     {form.errors.password}
@@ -158,11 +177,6 @@ export const ChangePassword = () => {
                                                     borderColor={'red'}
                                                     borderBlock={'red'}
                                                     focusBorderColor={'red'}
-                                                // onKeyDown={(event) => {
-                                                //   if (event.key === "Enter") {
-                                                //     handleReset();
-                                                //   }
-                                                // }}
                                                 />
                                                 <FormErrorMessage>
                                                     {form.errors.confirmPassword}
@@ -189,7 +203,7 @@ export const ChangePassword = () => {
                                             isLoading={formik.isSubmitting}
                                             mt={5}
                                         >
-                                            Confirm Password Reset
+                                            Confirm Password Change
                                         </Button>
                                     </Stack>
 

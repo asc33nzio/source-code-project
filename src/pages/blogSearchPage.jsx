@@ -99,7 +99,7 @@ export const BlogSearchPage = () => {
                 <Flex justifyContent="center" margin="20px auto" fontFamily={'monospace'}>
                     <Box bgColor="black" h="350px" w="350px" mr="30px" p="15px" borderRadius="10px" boxShadow="2px 2px 5px black">
                         <FormControl>
-                            <FormLabel color="#88012A" fontSize={'22px'}>What is it that you seek?</FormLabel>
+                            <FormLabel color="#88012A" fontSize={'22px'} fontWeight={'bold'}>What is it that you seek?</FormLabel>
                             <Input color="#88012A" type="text" value={query} onChange={handleInputChange} borderColor="#259A80" focusBorderColor="#88012A" placeholder="Title or Keywords here.." _placeholder={{ color: "#88012A" }} />
                             <Select color="#88012A" value={selectedCategory} onChange={handleCategoryChange} mt="10px" borderColor="#259A80" focusBorderColor="#88012A" placeholder="Categories">
                                 <option style={{ backgroundColor: "#334756" }} value="">All</option>
@@ -110,13 +110,31 @@ export const BlogSearchPage = () => {
                                 ))}
                             </Select>
 
-                            <Select  color="#88012A" onChange={handleSortChange} placeholder={"Sort by Time"} mt="10px" borderColor="#259A80" focusBorderColor="#88012A" _placeholder={{ color: "#88012A" }}>
+                            <Select color="#88012A" onChange={handleSortChange} placeholder={"Sort by Time"} mt="10px" borderColor="#259A80" focusBorderColor="#88012A" _placeholder={{ color: "#88012A" }}>
                                 <option value="newest">Newest</option>
                                 <option value="oldest">Oldest</option>
                             </Select>
 
                             <Stack>
-                                <Button mt={4} onClick={handleSearch} bgColor="#88012A" color="#082032" _hover={{ transform: "scale(1.1)" }}>
+                                <Button
+                                    mt={7}
+                                    onClick={handleSearch}
+                                    bgColor="#88012A"
+                                    color="#082032"
+                                    _hover={{
+                                        transform: "scale(2)",
+                                        textColor: '#88012A',
+                                        bg: 'black',
+                                        _before: {
+                                            bg: 'inherit',
+                                        },
+                                        _after: {
+                                            bg: 'inherit',
+                                        },
+                                    }}
+                                    w={'100px'}
+                                    alignSelf={'center'}
+                                >
                                     Search
                                 </Button>
                             </Stack>

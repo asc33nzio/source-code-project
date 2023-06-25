@@ -163,7 +163,7 @@ export const Delete = () => {
 
                 <Button
                     as={Link}
-                    to={"/"}
+                    to={"/search"}
                     fontSize="18px"
                     variant="solid"
                     colorScheme="yellow"

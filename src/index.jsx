@@ -33,6 +33,7 @@ const BrowserRouter = createBrowserRouter([
   { path: "/register", element: <RegisterPage /> },
   { path: "/verification", element: <VerifyAccount /> },
   { path: "/verification/:token", element: <VerifyAuto /> },
+  { path: "verification-change-email/:token", element: <VerifyAuto /> },
   { path: "/profile", element: <Profile /> },
   { path: "/login_user", element: <LoginUser /> },
   { path: "/login_email", element: <LoginEmail /> },
