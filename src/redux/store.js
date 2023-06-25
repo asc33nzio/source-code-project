@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-// Create the authSlice
+// authSlice
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -26,19 +26,23 @@ const authSlice = createSlice({
   },
 });
 
-// Extract the actions and reducer from authSlice
-const { actions, reducer } = authSlice;
+const { actions: authActions, reducer: authReducer } = authSlice;
 
 // Destructuring actions
-const { setLoggedOut, setLoggedIn, setAuthToken, setEmail } = actions;
-
+const { setLoggedOut, setLoggedIn, setAuthToken, setEmail } = authActions;
 
 // Redux store
 const store = configureStore({
   reducer: {
-    auth: reducer,
+    auth: authReducer,
   },
 });
 
-export { setLoggedOut, setLoggedIn, setAuthToken, setEmail };
+export {
+  setLoggedOut,
+  setLoggedIn,
+  setAuthToken,
+  setEmail,
+};
+
 export default store;

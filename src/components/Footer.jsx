@@ -112,8 +112,8 @@ export default function Footer() {
                 position="absolute"
                 bottom={0}
                 left={0}
-                ml={1}
-                mb={1}
+                ml={3}
+                mb={6}
                 alignItems="center"
             >
                 <Input

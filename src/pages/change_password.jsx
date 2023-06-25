@@ -30,7 +30,7 @@ const initialValues = {
     confirmPassword: '',
 };
 
-export const ChangeUsername = () => {
+export const ChangePassword = () => {
     const { token } = useParams();
     const navigate = useNavigate();
 

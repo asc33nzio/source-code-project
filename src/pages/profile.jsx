@@ -163,7 +163,7 @@ export function Profile() {
 
         <Stack direction={'row'} justify={'space-between'} w={'315px'}>
           <Button as={Link}
-            to={'/'}
+            to={'/change_username'}
             colorScheme="yellow"
             size="md" mb={2}
             fontFamily={'monospace'}
@@ -183,7 +183,7 @@ export function Profile() {
           </Button>
 
           <Button as={Link}
-            to={'/'}
+            to={'/change_email'}
             colorScheme="yellow"
             size="md" mb={2}
             fontFamily={'monospace'}
@@ -206,7 +206,7 @@ export function Profile() {
         </Stack>
         <Stack direction={'row'} justify={'space-between'} w={'315px'}>
           <Button as={Link}
-            to={'/'}
+            to={'/change_phone'}
             colorScheme="yellow"
             size="md" mb={2}
             fontFamily={'monospace'}
@@ -226,7 +226,7 @@ export function Profile() {
           </Button>
 
           <Button as={Link}
-            to={'/'}
+            to={'/change_password'}
             colorScheme="yellow"
             size="md" mb={2}
             fontFamily={'monospace'}

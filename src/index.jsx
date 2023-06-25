@@ -11,6 +11,10 @@ import { Profile } from './pages/profile';
 import { LoginUser } from "./pages/login_username";
 import { LoginEmail } from "./pages/login_email";
 import { LoginPhone } from "./pages/login_phone";
+import { ChangeEmail } from './pages/change_email';
+import { ChangePassword } from './pages/change_password';
+import { ChangePhone } from './pages/change_phone';
+import { ChangeUsername } from './pages/change_username';
 import { Forget } from './pages/forget';
 import { ResetPassword } from './pages/reset_password';
 import { Articles } from './pages/article';
@@ -20,6 +24,7 @@ import { Provider } from 'react-redux';
 import { HeavensDoor } from './pages/heavens_door';
 import { Delete } from './pages/godmode';
 import { UserArticlesPage } from './pages/user_articles_and_liked';
+import { BlogSearchPage } from './pages/blogSearchPage';
 import { NotFound } from './pages/404';
 import store from './redux/store';
 
@@ -40,6 +45,11 @@ const BrowserRouter = createBrowserRouter([
   { path: "/heavens_door", element: <HeavensDoor /> },
   { path: "/god_mode", element: <Delete /> },
   { path: "/user_articles", element: <UserArticlesPage /> },
+  { path: "/search", element: <BlogSearchPage /> },
+  { path: "/change_email", element: <ChangeEmail /> },
+  { path: "/change_password", element: <ChangePassword /> },
+  { path: "/change_phone", element: <ChangePhone /> },
+  { path: "/change_username", element: <ChangeUsername /> },
   { path: '*', element: <NotFound /> },
 ]);
 

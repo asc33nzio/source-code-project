@@ -93,7 +93,7 @@ export default function Navbar() {
                 }
             } catch (error) {
                 console.error("Error fetching login status:", error);
-                alert('Cannot verify your credentials. Please login or create an account to enjoy a better experience.');
+                alert('Cannot verify your credentials. Please login or create an account to gain full access to all our features.');
             }
         };
 
@@ -165,7 +165,7 @@ export default function Navbar() {
                                 Home
                             </NavLink>
 
-                            <NavLink key='Search_Articles' fontWeight={'bold'} to="/">
+                            <NavLink key='Search_Articles' fontWeight={'bold'} to="/search">
                                 Search Articles
                             </NavLink>
 

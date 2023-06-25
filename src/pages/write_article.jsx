@@ -25,9 +25,9 @@ export const WriteArticle = () => {
 
     useEffect(() => {
         if (!token) {
-          navigate("/login_user");
+            navigate("/login_user");
         }
-      }, [token, navigate]);
+    }, [token, navigate]);
 
     useEffect(() => {
         axios
@@ -51,6 +51,8 @@ export const WriteArticle = () => {
         file: null,
     };
 
+    const supportedExtensions = ['jpg', 'jpeg', 'png'];
+
     const validationSchema = Yup.object().shape({
         title: Yup.string().required('Title is required'),
         content: Yup.string().required('Content is required'),
@@ -61,7 +63,16 @@ export const WriteArticle = () => {
         file: Yup.mixed()
             .required('File is required')
             .test('fileSize', 'File size should be less than 1MB', (value) => {
-                return value && value.size <= 1 * 1024 * 1024; 
+                return value && value.size <= 1 * 1024 * 1024;
+            })
+            .test('fileFormat', 'Only JPG, JPEG, and PNG files are supported', (value) => {
+                if (!value) {
+                    // No file provided
+                    return true;
+                }
+
+                const fileExtension = value.name.split('.').pop().toLowerCase();
+                return supportedExtensions.includes(fileExtension);
             }),
     });
 
@@ -85,7 +96,7 @@ export const WriteArticle = () => {
                     },
                 }
             );
-            
+
             console.log("Nice.")
             console.log(response.data.data.title);
             console.log(response.data.message);
@@ -208,7 +219,7 @@ export const WriteArticle = () => {
                         <FormControl id="file" isInvalid={formik.touched.file && formik.errors.file}>
                             <FormLabel textAlign={'center'} pt={50} fontSize={'22px'}>Upload an Image Below 1mb:</FormLabel>
                             <Input
-                            pt={2}
+                                pt={2}
                                 type="file"
                                 name="file"
                                 variant="center"
@@ -219,7 +230,7 @@ export const WriteArticle = () => {
                         </FormControl>
                     </Stack>
 
-                    
+
                     <Stack direction={'row'} mt={200} justifyContent={'space-between'}>
                         <Button onClick={() => navigate('/')} mt="4" colorScheme={'yellow'}>
                             Return Home
