@@ -8,6 +8,7 @@ import {
   Input,
   Button,
   Img,
+  Stack,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Form, Link, useNavigate } from "react-router-dom";
@@ -43,7 +44,7 @@ export function Profile() {
 
         if (imgProfile !== null) { // Conditional to avoid CORB flags for users with no avatars
           setPp(`https://minpro-blog.purwadhikabootcamp.com/${imgProfile}`);
-          localStorage.setItem('profilePicture', `https://minpro-blog.purwadhikabootcamp.com/${imgProfile}`); 
+          localStorage.setItem('profilePicture', `https://minpro-blog.purwadhikabootcamp.com/${imgProfile}`);
         }
       } catch (error) {
         console.error("Error fetching profile data.", error);
@@ -143,17 +144,125 @@ export function Profile() {
             size="md" mb={2}
             fontFamily={'monospace'}
             onClick={handleProfilePictureUpload}
+            variant="solid"
+            _hover={{
+              textColor: '#88012A',
+              bg: 'black',
+              _before: {
+                bg: 'inherit',
+              },
+              _after: {
+                bg: 'inherit',
+              },
+            }}
           >
             Update Profile Picture
           </Button>
 
         </Form>
 
+        <Stack direction={'row'} justify={'space-between'} w={'315px'}>
+          <Button as={Link}
+            to={'/'}
+            colorScheme="yellow"
+            size="md" mb={2}
+            fontFamily={'monospace'}
+            variant="solid"
+            _hover={{
+              textColor: '#88012A',
+              bg: 'black',
+              _before: {
+                bg: 'inherit',
+              },
+              _after: {
+                bg: 'inherit',
+              },
+            }}
+          >
+            Change Username
+          </Button>
+
+          <Button as={Link}
+            to={'/'}
+            colorScheme="yellow"
+            size="md" mb={2}
+            fontFamily={'monospace'}
+            variant="solid"
+            _hover={{
+              textColor: '#88012A',
+              bg: 'black',
+              _before: {
+                bg: 'inherit',
+              },
+              _after: {
+                bg: 'inherit',
+              },
+            }}
+          >
+            Change E-Mail
+          </Button>
+
+
+        </Stack>
+        <Stack direction={'row'} justify={'space-between'} w={'315px'}>
+          <Button as={Link}
+            to={'/'}
+            colorScheme="yellow"
+            size="md" mb={2}
+            fontFamily={'monospace'}
+            variant="solid"
+            _hover={{
+              textColor: '#88012A',
+              bg: 'black',
+              _before: {
+                bg: 'inherit',
+              },
+              _after: {
+                bg: 'inherit',
+              },
+            }}
+          >
+            Change Phone Number
+          </Button>
+
+          <Button as={Link}
+            to={'/'}
+            colorScheme="yellow"
+            size="md" mb={2}
+            fontFamily={'monospace'}
+            variant="solid"
+            _hover={{
+              textColor: '#88012A',
+              bg: 'black',
+              _before: {
+                bg: 'inherit',
+              },
+              _after: {
+                bg: 'inherit',
+              },
+            }}
+          >
+            Change Password
+          </Button>
+        </Stack>
+
         <Button as={Link}
           to={'/'}
           colorScheme="yellow"
           size="md" mb={2}
-          fontFamily={'monospace'}>
+          fontFamily={'monospace'}
+          variant="solid"
+          _hover={{
+            textColor: '#88012A',
+            bg: 'black',
+            _before: {
+              bg: 'inherit',
+            },
+            _after: {
+              bg: 'inherit',
+            },
+          }}
+        >
           Return Home
         </Button>
 

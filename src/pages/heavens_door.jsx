@@ -124,9 +124,9 @@ export const HeavensDoor = () => {
                     as={Link}
                     to={'/'}
                     fontSize="18px"
-                    variant="solid"
                     colorScheme="yellow"
                     size="md"
+                    variant="solid"
                     _hover={{
                         textColor: '#88012A',
                         bg: 'black',
