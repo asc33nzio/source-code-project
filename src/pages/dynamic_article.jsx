@@ -138,7 +138,11 @@ export function DynamicArticle() {
                             >
                                 <Stack direction={'column'} bgColor={'#A09006'}>
                                     <Text fontFamily={'monospace'} fontSize={'18px'} textColor={'black'} bgColor={'#A09006'}>
-                                        Created at: {article.createdAt}
+                                        Created at: {new Date(`${article.createdAt}`).toLocaleDateString("en-us", {
+                                                    year: "numeric",
+                                                    month: "short",
+                                                    day: "numeric"
+                                                })}
                                     </Text>
 
                                     <Stack fontFamily={'monospace'} fontSize={'18px'} textColor={'black'} bgColor={'#A09006'} direction={'row'}>
