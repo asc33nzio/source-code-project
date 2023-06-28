@@ -16,8 +16,8 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 export const validationSchema = Yup.object().shape({
-    currentUsername: Yup.string().required('Username is required').min(3, 'Username must be at least 3 characters'),
-    newUsername: Yup.string().required('Username is required').min(3, 'Username must be at least 3 characters'),
+    currentUsername: Yup.string().required('Old username is required').min(3, 'Usernames must be at least 3 characters'),
+    newUsername: Yup.string().required('Username is required').min(3, 'Usernames must be at least 3 characters'),
 });
 
 const initialValues = {
@@ -31,7 +31,7 @@ export const ChangeUsername = () => {
 
     const handleReset = async (values) => {
         try {
-            values.FE_URL = 'https://scp--sourcecode-project.netlify.app';
+            values.FE_URL = 'https://sourcecodeproject.netlify.app';
             const headers = {
                 Authorization: `Bearer ${token}`,
             };
@@ -92,7 +92,7 @@ export const ChangeUsername = () => {
                         fontFamily={'monospace'}
                     >
                         <Heading position={'block'} fontFamily={'monospace'} textAlign={'center'} >
-                            New username<br />Prevent identity theft.
+                            New username.<br />Prevent identity theft.
                         </Heading>
 
                         <Formik

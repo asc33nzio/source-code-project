@@ -129,7 +129,7 @@ export const ChangePassword = () => {
                                                     focusBorderColor={'red'}
                                                 />
                                                 <FormErrorMessage>
-                                                    {form.errors.password}
+                                                    {form.errors.currentPassword}
                                                 </FormErrorMessage>
                                             </FormControl>
                                         )}

@@ -46,7 +46,7 @@ export const RegisterPage = () => {
     const handleSubmit = async (values, { setSubmitting, setErrors }) => {
         try {
             // values.FE_URL = "http://localhost:3000" //FOR DEVELOPMENT BUILD NOT PRODUCTION
-            values.FE_URL = "https://scp--sourcecode-project.netlify.app"
+            values.FE_URL = "https://sourcecodeproject.netlify.app"
             const response = await axios.post(
                 'https://minpro-blog.purwadhikabootcamp.com/api/auth/', values,
                 {

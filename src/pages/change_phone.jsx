@@ -18,7 +18,7 @@ import * as Yup from 'yup';
 export const validationSchema = Yup.object().shape({
     currentPhone: Yup.number()
     .typeError('You have a unique number. What universe are you from?')
-    .min(1000000000, 'Phone number must be 10-12 digits long').required('Phone number is required'),
+    .min(1000000000, 'Phone number must be 10-12 digits long').required('Old phone number is required'),
     newPhone: Yup.number()
     .typeError('You have a unique number. What universe are you from?')
     .min(1000000000, 'Phone number must be 10-12 digits long').required('Phone number is required'),
@@ -35,7 +35,7 @@ export const ChangePhone = () => {
 
     const handleReset = async (values) => {
         try {
-            values.FE_URL = 'https://scp--sourcecode-project.netlify.app';
+            values.FE_URL = 'https://sourcecodeproject.netlify.app';
             const headers = {
                 Authorization: `Bearer ${token}`,
             };

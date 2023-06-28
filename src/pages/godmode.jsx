@@ -56,7 +56,7 @@ export const Delete = () => {
                 }
             );
             console.log(response);
-            alert(`You have deleted article number ${id}. Note that if you go to https://scp--sourcecode-project.netlify.app/article/${id} ,the remnant will still be there, but this article is already deleted from our database.`);
+            alert(`You have deleted article number ${id}. Note that if you go to https://sourcecodeproject.netlify.app/article/${id} ,the remnant will still be there, but this article is already deleted from our database.`);
             setIsConfirmationOpen(false);
 
         } catch (err) {
@@ -96,7 +96,7 @@ export const Delete = () => {
                     </Text>
 
                     <Text fontSize={"18px"} align={'center'} bg={'black'} width={'40vw'} color={'red'}>
-                        <a href="https://scp--sourcecode-project.netlify.app/article/1" target="_blank" rel="noreferrer">https://scp--sourcecode-project.netlify.app/article/1</a>
+                        <a href="https://sourcecodeproject.netlify.app/article/1" target="_blank" rel="noreferrer">https://sourcecodeproject.netlify.app/article/1</a>
                     </Text>
 
                     <Text fontSize={"18px"} align={'center'} bg={'black'} width={'35vw'}>

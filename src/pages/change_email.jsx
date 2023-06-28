@@ -31,7 +31,7 @@ export const ChangeEmail = () => {
 
     const handleReset = async (values) => {
         try {
-            values.FE_URL = 'https://scp--sourcecode-project.netlify.app';
+            values.FE_URL = 'https://sourcecodeproject.netlify.app';
             const headers = {
                 Authorization: `Bearer ${token}`,
             };

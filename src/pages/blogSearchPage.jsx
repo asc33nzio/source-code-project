@@ -64,7 +64,7 @@ export const BlogSearchPage = () => {
 
     const handleSearch = async (page) => {
         try {
-            const response = await Axios.get(`https://minpro-blog.purwadhikabootcamp.com/api/blog?id_cat=${selectedCategory}&sort=${sorting}&page=${page}&size=8`, {
+            const response = await Axios.get(`https://minpro-blog.purwadhikabootcamp.com/api/blog?id_cat=${selectedCategory}&sort=${sorting}&page=${page}&size=7`, {
                 params: {
                     search: query,
                 },

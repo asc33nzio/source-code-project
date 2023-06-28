@@ -31,7 +31,7 @@ export function Forget() {
                 "https://minpro-blog.purwadhikabootcamp.com/api/auth/forgotPass",
                 {
                     // FE_URL: "http://localhost:3000", //FOR DEVELOPMENT BUILD NOT PRODUCTION
-                    FE_URL: "https://scp--sourcecode-project.netlify.app",
+                    FE_URL: "https://sourcecodeproject.netlify.app",
                     email: email,
                 }
             );
