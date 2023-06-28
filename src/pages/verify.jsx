@@ -81,8 +81,8 @@ export const VerifyAccount = () => {
           You should copy everything after
         </Box>
 
-        <Box as='p' textAlign='center' color={'yellow.700'} fontWeight={'bold'} fontSize={'17px'}>
-          https://scp--sourcecode-project.netlify.app/
+        <Box as='p' textAlign='center' color={'yellow.700'} fontWeight={'bold'} fontSize={'16px'}>
+          https://sourcecodeproject.netlify.app/
         </Box>
 
         <Box as='p' textAlign='center' color={'white'} mt={3} mb={3}>
