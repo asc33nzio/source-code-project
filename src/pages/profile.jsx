@@ -58,6 +58,19 @@ export function Profile() {
     const fileInput = document.getElementById('profilePicture');
     const file = fileInput.files[0];
 
+    // Check if a file is selected
+    if (!file) {
+      alert('Please select a file.');
+      return;
+    }
+
+    // Check if the file type is allowed
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    if (!allowedTypes.includes(file.type)) {
+      alert('Only JPG, JPEG, and PNG files are allowed.');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('file', file);
 
